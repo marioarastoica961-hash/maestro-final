@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Export Price Table — Maestro Market</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;margin:0;background:#f7f7f7}
+    header{background:#0b8a56;color:#fff;padding:16px 20px}
+    .wrap{max-width:900px;margin:0 auto;padding:20px}
+    textarea{width:100%;min-height:320px;padding:12px;border:1px solid #ddd;border-radius:10px;font-family:ui-monospace,Consolas,monospace}
+    .row{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+    button{padding:10px 14px;border-radius:10px;border:none;font-weight:800;cursor:pointer}
+    .primary{background:#18a362;color:#fff}
+    .ghost{background:#083f2c;color:#fff}
+    .note{opacity:.8}
+  </style>
+</head>
+<body>
+<header><strong>Export Price Table</strong></header>
+<main class="wrap">
+  <p class="note">This tool reads <code>/js/agents-data.js</code>, grabs all agents and builds a JSON map <code>{ slug: price }</code> for your Worker secret <code>PRICE_TABLE_JSON</code>.</p>
+
+  <div class="row">
+    <button id="gen" class="primary">Generate JSON</button>
+    <button id="min" class="ghost">Minify</button>
+    <button id="copy">Copy</button>
+  </div>
+
+  <textarea id="out" placeholder="Click Generate JSON…"></textarea>
+
+  <p class="note">After generating and copying, run:<br>
+  <code>wrangler secret put PRICE_TABLE_JSON</code> and paste the <strong>minified</strong> JSON.</p>
+</main>
+
+<script src="/js/agents-data.js"></script>
+<script>
+  const out = document.getElementById('out');
+
+  function buildTable() {
+    const agents = (window.MAESTRO_AGENTS || []);
+    if (!agents.length) {
+      alert('No agents found. Make sure /js/agents-data.js is accessible.');
+      return;
+    }
+    const table = {};
+    for (const a of agents) {
+      // Usa el monto definido por el generador
+      table[a.slug] = Number(a.pricing?.amount || 0);
+    }
+    return table;
+  }
+
+  document.getElementById('gen').addEventListener('click', () => {
+    const table = buildTable();
+    if (!table) return;
+    out.value = JSON.stringify(table, null, 2);
+  });
+
+  document.getElementById('min').addEventListener('click', () => {
+    if (!out.value.trim()) return;
+    try {
+      const obj = JSON.parse(out.value);
+      out.value = JSON.stringify(obj);
+    } catch (e) {
+      alert('Invalid JSON in the box.');
+    }
+  });
+
+  document.getElementById('copy').addEventListener('click', async () => {
+    if (!out.value.trim()) return;
+    await navigator.clipboard.writeText(out.value);
+    alert('Copied!');
+  });
+</script>
+</body>
+</html>

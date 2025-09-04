@@ -1,0 +1,4 @@
+/agents/*      /public/agents/:splat     200
+/agent/*       /public/agent/:splat      200
+/checkout/*    /public/checkout/:splat   200
+/checkout      /checkout/                 301

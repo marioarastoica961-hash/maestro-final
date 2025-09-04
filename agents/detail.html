@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Agent — Maestro Market</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body{margin:0;background:#f7f7f7;font-family:Arial,Helvetica,sans-serif}
+    header{background:#0b8a56;color:#fff;padding:18px 20px;position:sticky;top:0;z-index:100}
+    header .bar{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+    header nav a{color:#fff;text-decoration:none;margin-left:16px;font-weight:700}
+    .wrap{max-width:1100px;margin:0 auto;padding:28px 20px}
+    .card{background:#fff;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.06);padding:22px}
+    .row{display:grid;grid-template-columns:1.4fr .8fr;gap:16px}
+    .pill{display:inline-block;background:#eef;border-radius:999px;padding:6px 10px;margin:0 6px 6px 0;font-weight:700}
+    .btn{display:inline-block;padding:12px 16px;border-radius:12px;text-decoration:none;font-weight:800}
+    .btn-primary{background:#18a362;color:#fff}
+    .price{font-size:22px;color:#0b6e48;font-weight:900}
+    @media(max-width:900px){.row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <strong style="font-size:18px">Maestro Market</strong>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/agents/">AI Agents</a>
+      <a href="/leads/">Leads</a>
+      <a href="/cart/">Cart <span id="cart-badge"></span></a>
+      <a href="/account/">My Account</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="row">
+    <article class="card" id="info"></article>
+    <aside class="card" id="buy"></aside>
+  </div>
+</main>
+
+<footer style="background:#0b8a56;color:#fff;text-align:center;padding:20px">© 2025 Maestro Market</footer>
+
+<script src="/js/agents-data.js" defer></script>
+
+<script type="module">
+  import { addToCart, fmtPrice, updateCartBadge } from '/js/cart.js';
+
+  const params = new URLSearchParams(location.search);
+  const slug = params.get('slug');
+  const agent = (window.MAESTRO_AGENTS || []).find(a => a.slug === slug);
+
+  const info = document.getElementById('info');
+  const buy = document.getElementById('buy');
+
+  if (!agent){
+    info.innerHTML = `<p>Agent not found.</p>`;
+    buy.innerHTML = '';
+  } else {
+    info.innerHTML = `
+      <h1 style="margin:0 0 8px">${agent.name}</h1>
+      <div style="opacity:.7;margin-bottom:10px">${agent.category}</div>
+      <p>${agent.longDesc}</p>
+      <h3>Features</h3>
+      <ul>${agent.features.map(f=>`<li>${f}</li>`).join('')}</ul>
+      <h3>Integrations</h3>
+      <div>${agent.integrations.map(i=>`<span class="pill">${i}</span>`).join('')}</div>
+    `;
+
+    const priceStr = fmtPrice(agent.pricing.model, agent.pricing.amount);
+    buy.innerHTML = `
+      <h3 style="margin-top:0">Buy</h3>
+      <div class="price">${priceStr}</div>
+      <p style="opacity:.8">Includes onboarding via Telegram after checkout.</p>
+      <button id="buyBtn" class="btn btn-primary">Add to Cart</button>
+      <p style="margin-top:12px"><a href="/agents/">← Back to catalog</a></p>
+    `;
+
+    document.getElementById('buyBtn').addEventListener('click',()=>{
+      addToCart({
+        slug: agent.slug,
+        name: agent.name,
+        model: agent.pricing.model,
+        amount: agent.pricing.amount,
+        qty: 1
+      });
+      updateCartBadge();
+      location.href = '/cart/';
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+<svg width="180" height="36" viewBox="0 0 180 36" xmlns="http://www.w3.org/2000/svg">
+  <rect rx="8" width="36" height="36" fill="#0B8A56"/>
+  <path d="M10 24 L18 12 L26 24" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="44" y="24" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="800" fill="#083f2c">Maestro Market</text>
+</svg>

@@ -1,0 +1,74 @@
+/* public/assets/css/theme.css  —  Tema Maestro Market  */
+:root{
+  --g1:#19c37d;          /* verde claro arriba */
+  --g2:#0e7f52;          /* verde oscuro abajo */
+  --btn:#0e7f52;         /* botones */
+  --btn-hover:#0c6e46;
+  --ink:#0b3a36;         /* texto titular */
+  --muted:#48615c;       /* texto secundario */
+  --chip:#eaf7f1;        /* pills / chips */
+  --card:#ffffff;
+  --bg:#f6fbf9;
+  --ring:#bfe9d7;
+}
+
+/* base */
+html,body{min-height:100%;background:var(--bg);color:var(--ink);font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif}
+a{color:#0b5; text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* HERO / BARRAS con gradiente verde vertical */
+.hero,
+.gradient-hero,
+.masthead,
+.site-header {
+  background: linear-gradient(180deg,var(--g1),var(--g2));
+  color:#fff;
+}
+
+/* Header translucido sobre gradiente */
+.site-header{
+  color:#fff;
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+.site-header .menu a{color:#e9fff5}
+.site-header .menu a:hover{background:rgba(255,255,255,.18)}
+.site-header .cta{background:var(--btn) !important;border-color:var(--btn) !important;color:#fff !important}
+.site-header .cta:hover{background:var(--btn-hover) !important}
+
+/* Botones */
+.btn,.button,[data-btn]{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--btn);color:#fff;border:1px solid var(--btn);
+  border-radius:12px;padding:10px 16px;font-weight:600;
+  transition:filter .15s ease, background .15s ease;
+}
+.btn:hover,.button:hover,[data-btn]:hover{background:var(--btn-hover);filter:saturate(110%)}
+
+/* Pills / chips (categorías) */
+.chip,.pill,.tag{
+  background:var(--chip);color:var(--ink);
+  border:1px solid var(--ring);border-radius:999px;
+  padding:8px 12px;display:inline-flex;gap:6px;align-items:center;
+}
+
+/* Tarjetas catálogo */
+.card{
+  background:var(--card);
+  border:1px solid #e7f3ee;border-radius:16px;overflow:hidden;
+  box-shadow:0 2px 10px rgba(10,60,40,.04);
+}
+.card .card-hero{
+  background: linear-gradient(180deg,var(--g1),var(--g2));
+  min-height:140px;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;
+}
+
+/* Inputs */
+input,select,textarea{
+  background:#fff;border:1px solid var(--ring);
+  border-radius:12px;padding:10px 12px;outline:none;
+}
+input:focus,select:focus,textarea:focus{box-shadow:0 0 0 3px #bfe9d780;border-color:#76d4b2}
+
+/* Footer claro */
+.site-footer{background:#f2fbf7;border-top:1px solid #dbeee6}

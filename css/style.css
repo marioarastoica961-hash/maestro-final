@@ -1,0 +1,101 @@
+/* public/css/style.css */
+/* Estilo para la página de Mi Cuenta con header y botones alineados verticalmente */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
+
+#main-header {
+  background-color: #006400; /* Verde oscuro */
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: center;  /* Centra el contenido */
+  align-items: center;
+  flex-direction: column;   /* Alinea los elementos verticalmente */
+}
+
+#main-header nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  margin: 0;
+  flex-direction: column;  /* Alinea los enlaces verticalmente */
+  align-items: center;
+}
+
+#main-header nav ul li {
+  margin: 10px 0;
+}
+
+#main-header nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.container {
+  margin-top: 150px; /* Ajusta el espacio por el header fijo */
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  color: #006400; /* Verde oscuro */
+}
+
+.login-section {
+  margin-top: 30px;
+}
+
+.login-buttons {
+  display: flex;
+  flex-direction: column; /* Alinea los botones verticalmente */
+  align-items: center;
+  margin-top: 20px;
+}
+
+button {
+  margin: 10px 0;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 250px;
+}
+
+button.green {
+  background-color: #4CAF50; /* Verde claro */
+  color: white;
+}
+
+button.dark-green {
+  background-color: #006400; /* Verde oscuro */
+  color: white;
+}
+
+button.red {
+  background-color: #FF6347; /* Rojo tomate */
+  color: white;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+footer {
+  background-color: #006400; /* Verde oscuro */
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}

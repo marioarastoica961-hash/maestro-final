@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Build Sites — Maestro Market</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0d8a56" />
+  <link rel="stylesheet" href="/theme.css?v=13" />
+  <style>
+    .wrap{max-width:1100px;margin:0 auto;padding:28px 20px}
+    .hero{background:linear-gradient(180deg,#11a763,#0b8a56);color:#fff}
+    .hero .wrap{padding:56px 20px}
+    .grid{display:grid;gap:16px}
+    .grid-3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .card{background:#fff;border-radius:16px;box-shadow:0 10px 28px rgba(0,0,0,.08);padding:18px}
+    .btn{padding:12px 18px;border-radius:14px;border:none;font-weight:800;text-decoration:none;display:inline-block}
+    .btn-primary{background:#18a362;color:#fff}
+    .btn-dark{background:#0b6e48;color:#fff}
+    .muted{opacity:.8}
+  </style>
+</head>
+<body>
+  <!-- Header include -->
+  <div id="site-header" data-src="/components/header.html?v=13"></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <h1>Launch crypto-ready sites in minutes</h1>
+      <p class="muted">Landing pages, product sites and microsites with on-chain or crypto checkout. Delivered via Telegram after purchase.</p>
+      <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+        <a class="btn btn-primary" href="/checkout/">Pay with crypto</a>
+        <a class="btn btn-dark" href="/builder/">Custom Build</a>
+      </div>
+    </div>
+  </section>
+
+  <main class="wrap">
+    <h2>Popular templates</h2>
+    <section class="grid grid-3">
+      <article class="card">
+        <h3>Crypto Product Landing</h3>
+        <p>High-converting landing page focused on a single product, with testimonials and checkout block.</p>
+        <p><b>$119</b></p>
+        <a class="btn btn-primary" href="/checkout/">Use this template</a>
+      </article>
+      <article class="card">
+        <h3>Agency One-Pager</h3>
+        <p>Hero + services + portfolio grid + contact form. Optimized for mobile and speed.</p>
+        <p><b>$129</b></p>
+        <a class="btn btn-primary" href="/checkout/">Use this template</a>
+      </article>
+      <article class="card">
+        <h3>Event / Launch Page</h3>
+        <p>Countdown, speakers, agenda and registration. Exports RSVPs to Google Sheets.</p>
+        <p><b>$99</b></p>
+        <a class="btn btn-primary" href="/checkout/">Use this template</a>
+      </article>
+    </section>
+
+    <h2 style="margin-top:26px">What’s included</h2>
+    <section class="grid grid-3">
+      <article class="card"><b>Instant delivery</b><br><span class="muted">Ready-to-deploy files + quick start guide.</span></article>
+      <article class="card"><b>Crypto checkout</b><br><span class="muted">NOWPayments integration for BTC, ETH, USDT and more.</span></article>
+      <article class="card"><b>SEO & speed</b><br><span class="muted">Lighthouse 90+, responsive, and CDN ready.</span></article>
+    </section>
+
+    <div style="margin-top:28px">
+      <a class="btn btn-dark" href="/agents/">Browse AI Agents</a>
+    </div>
+  </main>
+
+  <!-- Footer include -->
+  <div id="site-footer" data-src="/components/footer.html?v=3"></div>
+
+  <!-- Include loader -->
+  <script>
+    (async () => {
+      const include = async (host) => {
+        const src = host.getAttribute('data-src'); if(!src) return;
+        host.innerHTML = await (await fetch(src, { cache: 'no-store' })).text();
+      };
+      await Promise.all([...document.querySelectorAll('[data-src]')].map(include));
+    })();
+  </script>
+</body>
+</html>

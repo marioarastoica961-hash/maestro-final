@@ -1,0 +1,27 @@
+/* Minimal, shared styles for header/footer */
+:root{
+  --mm-green:#0b8a56;
+  --mm-green-d:#083f2c;
+  --mm-bg:#f7f7f7;
+  --mm-card:#fff;
+  --mm-shadow:0 10px 24px rgba(0,0,0,.06);
+}
+body{margin:0;background:var(--mm-bg);font-family:Arial,Helvetica,sans-serif}
+
+/* Header */
+.mm-header{background:var(--mm-green);color:#fff;position:sticky;top:0;z-index:100}
+.mm-bar{max-width:1200px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between}
+.mm-brand{color:#fff;text-decoration:none;font-weight:900;font-size:18px}
+.mm-nav a{color:#fff;text-decoration:none;margin-left:16px;font-weight:700}
+
+/* Footer */
+.mm-footer{background:var(--mm-green);color:#fff;margin-top:40px}
+.mm-wrap{max-width:1200px;margin:0 auto;padding:28px 20px}
+.mm-cols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:18px}
+.mm-footer a{color:#fff;text-decoration:none}
+.mm-footer h4,.mm-footer h5{margin:0 0 10px}
+.mm-copy{opacity:.8;margin-top:10px}
+.mm-paylist{display:flex;gap:8px;list-style:none;padding:0;margin:8px 0 0}
+.mm-paylist li{background:rgba(255,255,255,.15);padding:6px 10px;border-radius:10px;font-weight:700}
+@media(max-width:900px){.mm-cols{grid-template-columns:1fr 1fr}.mm-nav a{margin-left:12px}}
+@media(max-width:640px){.mm-cols{grid-template-columns:1fr}}

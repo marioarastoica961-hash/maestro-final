@@ -1,0 +1,11 @@
+{
+  "home": {
+    "title": "AI Agent Marketplace",
+    "subtitle": "Elige, personaliza y paga con cripto. Entrega 01h / 24h / 48h.",
+    "search": "Buscar nombre o #tag"
+  },
+  "cards": {
+    "view": "Ver",
+    "buy": "Comprar"
+  }
+}

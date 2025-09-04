@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>My Orders — Maestro Market</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0d8a56" />
+  <link rel="stylesheet" href="/theme.css?v=8" />
+  <script src="/cart.js" defer></script>
+  <style>
+    .wrap{max-width:1000px;margin:0 auto;padding:28px 20px}
+    .box{background:#fff;border-radius:16px;box-shadow:0 6px 24px rgba(0,0,0,.06);padding:18px}
+    form{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+    input{padding:10px;border-radius:12px;border:1px solid #e4e7eb;min-width:240px}
+    .table{width:100%;border-collapse:separate;border-spacing:0 8px}
+    .row{background:#fff;border-radius:12px;box-shadow:0 3px 14px rgba(0,0,0,.05)}
+    .row td{padding:12px 14px}
+    .badge{background:#e6f7ee;color:#0b6e48;border-radius:999px;padding:6px 10px;font-size:12px;display:inline-block}
+    .btn{padding:8px 12px;border-radius:10px;text-decoration:none;font-weight:700}
+    .btn-dark{background:#0b6e48;color:#fff}
+  </style>
+</head>
+<body>
+  <div id="site-header" data-src="/components/header.html?v=8"></div>
+
+  <main class="wrap">
+    <h1>My Orders</h1>
+    <div class="box">
+      <form id="lookup">
+        <input id="email" type="email" placeholder="Your purchase email" required>
+        <button class="btn btn-dark" type="submit">Find orders</button>
+      </form>
+      <div id="out">Enter your email to see your orders.</div>
+    </div>
+  </main>
+
+  <div id="site-footer" data-src="/components/footer.html?v=3"></div>
+
+  <script>
+    (async()=>{const inc=async(h)=>{const s=h.getAttribute('data-src');if(!s)return;h.innerHTML=await (await fetch(s,{cache:'no-store'})).text();};await Promise.all([...document.querySelectorAll('[data-src]')].map(inc));})();
+    const out = document.getElementById('out');
+    document.getElementById('lookup').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      if(!email) return;
+      out.textContent = 'Loading...';
+      try{
+        const res = await fetch(`https://pay.hazelsophia.tech/orders?email=${encodeURIComponent(email)}`, {cache:'no-store'});
+        const data = await res.json();
+        if(!data.ok){ out.textContent = 'No orders found.'; return; }
+        if(!data.orders || !data.orders.length){ out.textContent = 'No orders yet.'; return; }
+        out.innerHTML = `
+          <table class="table">
+            <tbody>
+              ${data.orders.map(o => `
+                <tr class="row">
+                  <td><b>${o.items.map(i=>i.name).join(', ')}</b><br><span class="badge">${o.status}</span></td>
+                  <td>$${o.amount_total_usd}</td>
+                  <td>${new Date(o.created_at).toLocaleString()}</td>
+                  <td>
+                    ${o.status === 'finished' && o.download_url ? `<a class="btn btn-dark" href="${o.download_url}" target="_blank">Open</a>` : (o.pending_link ? `<a class="btn btn-dark" href="${o.pending_link}" target="_blank">Open in Telegram</a>` : '')}
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      }catch(err){
+        out.textContent = 'Error loading orders.';
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>

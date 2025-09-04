@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mi cuenta — Maestro Market</title>
+  <link rel="stylesheet" href="/theme.css" />
+</head>
+<body>
+  <header><h1>Mi cuenta</h1></header>
+  <main>
+    <h2>Mis pedidos</h2>
+    <div id="orders">Cargando...</div>
+  </main>
+  <script>
+    const WORKER = 'https://pay.hazelsophia.tech';
+    async function loadOrders(){
+      const res = await fetch(WORKER+'/orders?prefix=pay:');
+      const data = await res.json();
+      const box = document.getElementById('orders');
+      if(!data.items.length){ box.textContent='No hay pedidos confirmados'; return; }
+      box.innerHTML='';
+      data.items.forEach(o=>{
+        const v=o.value||{};
+        const el=document.createElement('div');
+        el.innerHTML = '<b>'+ (v.order_id||o.key)+'</b> - '+v.status+' - '+v.price_amount+' '+v.price_currency +
+                       ' <a href="/success/?order_id='+encodeURIComponent(v.order_id||o.key)+'">Ver entrega</a>';
+        box.appendChild(el);
+      });
+    }
+    loadOrders();
+  </script>
+</body>
+</html>

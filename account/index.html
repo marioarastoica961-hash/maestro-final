@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mi cuenta — Maestro Market</title>
+  <link rel="stylesheet" href="/theme.css" />
+  <script defer src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    :root { --brand:#0b7a4b; --bg:#f8f9fa; }
+    body { font-family: system-ui, Arial, sans-serif; margin:0; background:var(--bg); }
+    header { background: linear-gradient(180deg, #17a36b, var(--brand)); color:#fff; }
+    header .wrap { max-width:980px; margin:auto; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; }
+    main .wrap { max-width:980px; margin:auto; padding:24px 16px; }
+    .card { background:#fff; border-radius:16px; box-shadow:0 6px 18px rgba(0,0,0,.06); padding:20px; margin-bottom:16px; }
+    h1 { margin:0 0 6px; }
+    .muted { color:#58606a; }
+    .btn { display:inline-flex; align-items:center; gap:10px; background:#fff; color:#111; border:0; border-radius:16px; padding:14px 18px; font-weight:700; cursor:pointer; box-shadow:0 6px 18px rgba(0,0,0,.08); }
+    .btn.green { background:#0b7a4b; color:#fff; }
+    .btn-row { display:grid; gap:14px; }
+    .order { border:1px solid #eee; border-radius:12px; padding:12px 14px; margin:10px 0; }
+    code { background:#eef2f7; padding:2px 6px; border-radius:6px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <strong><a href="/" style="color:#fff; text-decoration:none;">Maestro Market</a></strong>
+      <nav><a href="/agents/" style="color:#fff">Agentes</a> · <a href="/account/" style="color:#fff">Mi cuenta</a></nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <!-- Panel de autenticación -->
+      <section class="card" id="authCard">
+        <h1>My account</h1>
+        <p class="muted">Login to manage your orders.</p>
+        <div class="btn-row">
+          <button id="loginEmail" class="btn">Login with Email</button>
+          <button id="loginGoogle" class="btn">Continue with Google</button>
+          <a id="loginTelegram" class="btn" href="https://t.me/MaestroDirectorBot" target="_blank" rel="noopener">Continue with Telegram</a>
+        </div>
+      </section>
+
+      <!-- Panel del usuario logueado -->
+      <section class="card" id="userCard" style="display:none;">
+        <h1>Hola, <span id="userName">—</span></h1>
+        <p class="muted">Email: <code id="userEmail">—</code></p>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin:10px 0;">
+          <a id="connectTg" class="btn green" href="#" target="_blank" rel="noopener">Conectar con Telegram</a>
+          <button id="logout" class="btn">Cerrar sesión</button>
+        </div>
+      </section>
+
+      <!-- Pedidos -->
+      <section class="card" id="ordersCard" style="display:none;">
+        <h2>Mis pedidos</h2>
+        <p class="muted">Pedidos confirmados (pagos <code>pay:</code>), filtrados por tu email.</p>
+        <div id="ordersList">Cargando…</div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const WORKER_BASE = 'https://pay.hazelsophia.tech'; // tu Worker
+
+    const $auth   = document.getElementById('authCard');
+    const $user   = document.getElementById('userCard');
+    const $orders = document.getElementById('ordersCard');
+    const $name   = document.getElementById('userName');
+    const $email  = document.getElementById('userEmail');
+    const $ordersList = document.getElementById('ordersList');
+    const $connectTg = document.getElementById('connectTg');
+
+    // 1) Netlify Identity: abrir modal
+    document.getElementById('loginEmail').onclick = () => netlifyIdentity.open('login');
+    document.getElementById('loginGoogle').onclick = () => netlifyIdentity.open('login');
+    document.getElementById('logout').onclick = () => netlifyIdentity.logout();
+
+    // 2) Estado de sesión
+    function onLogin(user){
+      const email = user.email || user.user_metadata?.email || user?.app_metadata?.provider;
+      $name.textContent = user.user_metadata?.full_name || user.user_metadata?.name || user.email || 'User';
+      $email.textContent = email || '—';
+
+      // Botón “Conectar con Telegram”: deep link con /start connect:<b64(email)>
+      const b64 = btoa(unescape(encodeURIComponent(email || '')));
+      const botUser = 'MaestroDirectorBot'; // cambia si tu @ es otro
+      $connectTg.href = `https://t.me/${botUser}?start=connect:${b64}`;
+
+      $auth.style.display = 'none';
+      $user.style.display = 'block';
+      $orders.style.display = 'block';
+
+      loadOrdersForEmail(email);
+    }
+
+    function onLogout(){
+      $auth.style.display = 'block';
+      $user.style.display = 'none';
+      $orders.style.display = 'none';
+    }
+
+    // 3) Cargar pedidos confirmados “del usuario”
+    // Estrategia: traer pay: y cruzar con pre-orden order:<order_id> para filtrar por email
+    async function loadOrdersForEmail(email){
+      $ordersList.textContent = 'Cargando…';
+      try{
+        const res = await fetch(WORKER_BASE + '/orders?prefix=pay:');
+        const data = await res.json();
+        if (!data.items?.length) {
+          $ordersList.innerHTML = "<p class='muted'>Aún no hay pedidos confirmados.</p>";
+          return;
+        }
+        const out = [];
+        for (const it of data.items){
+          const orderId = it.value?.order_id || '';
+          if (!orderId) continue;
+          // pedimos la pre-orden para ver su email
+          const orderDetail = await fetch(WORKER_BASE + '/orders?prefix=' + encodeURIComponent('order:' + orderId));
+          const d = await orderDetail.json();
+          // /orders con prefix=order:<id> devolverá 1 coincidencia si existe
+          const pre = d.items?.[0]?.value || null;
+          const preEmail = pre?.email || '';
+          if (preEmail && email && preEmail.toLowerCase() !== email.toLowerCase()) continue;
+
+          out.push({ pay: it.value, pre });
+        }
+
+        if (!out.length){
+          $ordersList.innerHTML = "<p class='muted'>No encontramos pedidos asociados a tu email todavía.</p>";
+          return;
+        }
+
+        $ordersList.innerHTML = '';
+        out.forEach(row=>{
+          const p = row.pay, pre = row.pre || {};
+          const el = document.createElement('div');
+          el.className = 'order';
+          const oid = p.order_id || '(sin id)';
+          const total = (p.price_amount != null ? p.price_amount + ' ' + (p.price_currency || '') : (pre.amount != null ? '$' + pre.amount : ''));
+          el.innerHTML = `
+            <h3>Pedido ${oid}</h3>
+            <p>Total: <strong>${total}</strong></p>
+            <p>Estado: <span style="color:green;">${p.status || 'finished'}</span></p>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <a class="btn" href="/success/?order_id=${encodeURIComponent(oid)}">Ver entrega</a>
+              <a class="btn" href="https://t.me/MaestroDirectorBot?start=${encodeURIComponent(oid)}" target="_blank" rel="noopener">Recibir en Telegram</a>
+            </div>
+          `;
+          $ordersList.appendChild(el);
+        });
+      }catch(e){
+        console.error(e);
+        $ordersList.textContent = 'Error cargando pedidos.';
+      }
+    }
+
+    // 4) Hookear eventos del widget
+    netlifyIdentity.on('init', user => user ? onLogin(user) : onLogout());
+    netlifyIdentity.on('login', user => { onLogin(user); netlifyIdentity.close(); });
+    netlifyIdentity.on('logout', () => onLogout());
+    // inicializa
+    netlifyIdentity.init();
+  </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+[
+  {
+    "slug": "custom-cold-outreach",
+    "name": "Custom — Cold Outreach Pro",
+    "price_usd": 199,
+    "delivery": "instant",
+    "short": "Personalized outreach bot, warm-up + reply detection",
+    "description": "Custom cold email & LinkedIn outreach sequences, with warm-up, reply detection, and Telegram notifications.",
+    "category": "custom",
+    "image": "/assets/img/custom-outreach.jpg"
+  },
+  {
+    "slug": "custom-analytics",
+    "name": "Custom — Analytics Reporter",
+    "price_usd": 149,
+    "delivery": "instant",
+    "short": "Daily KPIs in Slack/Telegram with dashboards",
+    "description": "Customized analytics reporter that sends your KPIs to Slack/Telegram, with dashboards tailored to your business.",
+    "category": "custom",
+    "image": "/assets/img/custom-analytics.jpg"
+  },
+  {
+    "slug": "custom-inbox",
+    "name": "Custom — Inbox Support Bot",
+    "price_usd": 179,
+    "delivery": "instant",
+    "short": "Smart support bot for email triage",
+    "description": "Inbox bot with auto-replies, triage rules and Slack handoff. Fully customizable to your workflows.",
+    "category": "custom",
+    "image": "/assets/img/custom-inbox.jpg"
+  },
+  {
+    "slug": "custom-builder",
+    "name": "Custom — Build to Order",
+    "price_usd": 249,
+    "delivery": "instant",
+    "short": "Your idea → instant build",
+    "description": "Describe your idea and Maestro builds a custom AI agent or website tailored to your needs. Delivery via Telegram.",
+    "category": "custom",
+    "image": "/assets/img/custom-builder.jpg"
+  }
+]

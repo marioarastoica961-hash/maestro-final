@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "name": "Juan Pérez",
+    "email": "juan@empresa.com",
+    "industry": "Marketing",
+    "country": "Spain",
+    "source": "Formulario Web",
+    "price": 49,
+    "date": "2025-09-03",
+    "stock": 3
+  },
+  {
+    "id": 2,
+    "name": "Sofía Martínez",
+    "email": "sofia@tiendadigital.com",
+    "industry": "E-commerce",
+    "country": "Mexico",
+    "source": "Campaña Ads",
+    "price": 39,
+    "date": "2025-09-02",
+    "stock": 2
+  }
+]

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pago cancelado — Maestro Market</title>
+  <link rel="stylesheet" href="/theme.css" />
+  <style>
+    :root { --brand:#0b7a4b; --bg:#f8f9fa; }
+    body { font-family: system-ui, Arial, sans-serif; margin:0; background:var(--bg); }
+    header { background: linear-gradient(180deg, #17a36b, var(--brand)); color:#fff; }
+    header .wrap { max-width:980px; margin:auto; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; }
+    main .wrap { max-width:980px; margin:auto; padding:24px 16px; }
+    .card { background:#fff; border-radius:16px; box-shadow:0 6px 18px rgba(0,0,0,.06); padding:20px; }
+    .btn { display:inline-flex; align-items:center; gap:8px; background:#1f2937; color:#fff; border:0; border-radius:12px; padding:12px 16px; font-weight:700; text-decoration:none; }
+    .btn.primary { background:#0b7a4b; }
+    p.muted { color:#58606a; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <strong><a href="/" style="color:#fff; text-decoration:none;">Maestro Market</a></strong>
+      <nav><a href="/agents/" style="color:#fff">Agentes</a> · <a href="/account/" style="color:#fff">Mi cuenta</a></nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <section class="card">
+        <h1>Pago cancelado</h1>
+        <p class="muted">No se completó la transacción. Puedes reintentarlo cuando quieras.</p>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:12px;">
+          <a id="retry" class="btn primary" href="/agents/">Volver al catálogo</a>
+          <a id="support" class="btn" href="https://t.me/MaestroDirectorBot" target="_blank" rel="noopener">Ayuda por Telegram</a>
+        </div>
+
+        <hr style="margin:20px 0; border:none; border-top:1px solid #eee" />
+
+        <p class="muted" id="orderHint" style="display:none;">
+          Sugerencia: vuelve a pagar con el botón que te dimos para la orden <code id="orderId">—</code>.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    (function(){
+      // Si NOWPayments nos devolvió a /cancel/?order_id=...
+      const qs = new URLSearchParams(location.search);
+      const orderId = qs.get('order_id');
+      if (orderId) {
+        const $line = document.getElementById('orderHint');
+        const $oid  = document.getElementById('orderId');
+        $oid.textContent = orderId;
+        $line.style.display = 'block';
+      }
+    })();
+  </script>
+</body>
+</html>

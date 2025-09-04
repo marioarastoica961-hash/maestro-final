@@ -1,0 +1,4 @@
+<a href="/" class="flex items-center gap-2">
+  <img src="/hs-logo.svg" alt="HS" width="28" height="28" />
+  <span class="text-lg font-extrabold tracking-tight">HS</span>
+</a>

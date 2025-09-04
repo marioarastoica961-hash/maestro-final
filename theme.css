@@ -1,0 +1,11 @@
+/* Header links y marca siempre blancos */
+header a,
+header span {
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+header a:visited,
+header a:active {
+  color: #ffffff !important;
+}

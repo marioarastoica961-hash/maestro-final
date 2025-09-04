@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Build Sites — Maestro Market</title>
+  <link rel="stylesheet" href="/theme.css" />
+  <style>
+    :root{
+      --mm-green:#0b7a4b; --mm-green-dark:#095c37; --mm-bg:#f6faf8; --mm-text:#101828;
+      --muted:#667085; --radius:16px;
+    }
+    body{background:var(--mm-bg);color:var(--mm-text)}
+    header.site{position:sticky;top:0;z-index:20;background:linear-gradient(90deg,#0ca56a,#0b7a4b);color:#fff}
+    header.site .wrap{max-width:1200px;margin:auto;display:flex;align-items:center;gap:16px;padding:12px 16px}
+    header.site a{color:#fff;text-decoration:none;font-weight:600}
+    .wrap-main{max-width:1200px;margin:auto;padding:24px 16px}
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center}
+    @media(max-width:900px){.hero{grid-template-columns:1fr}}
+    .kicker{color:#ecfdf3;display:inline-flex;gap:8px;align-items:center;background:#0d8b57;border-radius:999px;padding:6px 12px;margin-bottom:12px}
+    .title{font-size:2.2rem;line-height:1.15;margin:8px 0 10px}
+    .sub{color:var(--muted);font-size:1.05rem}
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+    .btn{background:var(--mm-green);color:#fff;border:0;border-radius:12px;padding:12px 18px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+    .btn:hover{background:var(--mm-green-dark)}
+    .btn-alt{background:#fff;color:var(--mm-green);border:1px solid var(--mm-green)}
+    .card{background:#fff;border-radius:20px;box-shadow:0 12px 28px rgba(16,24,40,.08);padding:20px}
+    .stack{display:grid;gap:18px}
+    .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .badge{background:#ecfdf3;border:1px solid #abefc6;color:#067647;border-radius:999px;padding:6px 10px;font-size:.85rem}
+
+    .section{margin-top:36px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    @media(max-width:1000px){.grid-3{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:680px){.grid-3{grid-template-columns:1fr}}
+
+    .price-card h3{margin:0 0 6px}
+    .price{font-size:2rem;font-weight:900;margin:8px 0}
+    .features{list-style:none;padding:0;margin:12px 0}
+    .features li{display:flex;gap:8px;align-items:flex-start;margin:6px 0}
+    .features li:before{content:"✓";color:#0b7a4b;margin-top:2px}
+
+    .gallery img{width:100%;border-radius:14px;border:1px solid #eef2f6}
+
+    .faq .item{background:#fff;border:1px solid #eef2f6;border-radius:14px;padding:14px}
+    .faq .q{font-weight:800;cursor:pointer}
+    .faq .a{color:#475467;display:none;margin-top:6px}
+    .faq .item.open .a{display:block}
+
+    .form{display:grid;gap:10px}
+    .form input,.form textarea, .form select{padding:12px;border-radius:12px;border:1px solid #d0d5dd;background:#fff}
+    .muted{color:#667085}
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site">
+    <div class="wrap">
+      <a href="/" style="display:flex;align-items:center;gap:8px"><span style="font-size:22px">🌿</span><strong>Maestro Market</strong></a>
+      <div style="flex:1"></div>
+      <nav style="display:flex;gap:16px">
+        <a href="/agents/">Agentes IA</a>
+        <a href="/leads/">Leads</a>
+        <a href="/build-sites/">Build Sites</a>
+        <a href="/custom/">Crear a tu gusto</a>
+        <a href="/support/">Soporte</a>
+        <a href="/account/">Mi Cuenta</a>
+        <a href="/cart/">Carrito</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap-main">
+    <!-- HERO -->
+    <section class="hero">
+      <div>
+        <div class="kicker">🚀 Build Sites</div>
+        <h1 class="title">Sitios web rápidos, bonitos y listos para vender.</h1>
+        <p class="sub">Landing pages, catálogos, blogs y e-commerce ligeros. Hosting global, analytics y entrega por Telegram. Paga con cripto y obtén tu sitio en horas.</p>
+        <div class="badges">
+          <span class="badge">SEO ready</span>
+          <span class="badge">Netlify + CDN</span>
+          <span class="badge">Integrable con Telegram</span>
+          <span class="badge">Soporte en español e inglés</span>
+        </div>
+        <div class="cta-row">
+          <a class="btn" href="/checkout/?slug=site-starter&delivery=instant">Crear “Starter”</a>
+          <a class="btn btn-alt" href="#planes">Ver planes</a>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="card">
+          <strong>¿Qué incluye?</strong>
+          <ul class="features">
+            <li>Diseño responsive con tema verde Maestro</li>
+            <li>Secciones: Hero, Features, Pricing, FAQ</li>
+            <li>Integración básica con tu bot/Telegram</li>
+            <li>Optimización de rendimiento y SEO base</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>¿Cómo funciona?</strong>
+          <ol style="margin:8px 0 0 18px">
+            <li>Elige un plan y paga con cripto</li>
+            <li>Recibes un form para contenido y branding</li>
+            <li>Maestro construye y te entrega el ZIP + deploy</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLANES -->
+    <section id="planes" class="section">
+      <h2>Planes</h2>
+      <div class="grid-3">
+        <div class="card price-card">
+          <h3>Starter</h3>
+          <div class="muted">Landing de 1 página</div>
+          <div class="price">$99</div>
+          <ul class="features">
+            <li>Secciones: Hero, beneficios y CTA</li>
+            <li>1 formulario (contacto o lead)</li>
+            <li>Entrega por Telegram + ZIP</li>
+          </ul>
+          <a class="btn" href="/checkout/?slug=site-starter&delivery=instant">Empezar Starter</a>
+        </div>
+        <div class="card price-card">
+          <h3>Pro</h3>
+          <div class="muted">Sitio de 3–5 páginas</div>
+          <div class="price">$249</div>
+          <ul class="features">
+            <li>Secciones y páginas a medida</li>
+            <li>Blog/portafolio básico</li>
+            <li>Integración con Telegram</li>
+          </ul>
+          <a class="btn" href="/checkout/?slug=site-pro&delivery=instant">Empezar Pro</a>
+        </div>
+        <div class="card price-card">
+          <h3>Plus</h3>
+          <div class="muted">E-commerce ligero</div>
+          <div class="price">$399</div>
+          <ul class="features">
+            <li>Catálogo + checkout cripto</li>
+            <li>Hasta 50 productos</li>
+            <li>Soporte prioritario</li>
+          </ul>
+          <a class="btn" href="/checkout/?slug=site-plus&delivery=instant">Empezar Plus</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALERÍA / PORTFOLIO -->
+    <section class="section">
+      <h2>Ejemplos</h2>
+      <div class="grid-3 gallery">
+        <img src="https://picsum.photos/seed/ma1/800/520" alt="demo 1" />
+        <img src="https://picsum.photos/seed/ma2/800/520" alt="demo 2" />
+        <img src="https://picsum.photos/seed/ma3/800/520" alt="demo 3" />
+      </div>
+    </section>
+
+    <!-- FORM BRIEF -->
+    <section class="section">
+      <h2>Cuéntanos tu idea</h2>
+      <p class="muted">Completa este brief y el Maestro te guiará por Telegram.</p>
+      <div class="card">
+        <form class="form" onsubmit="return sendBrief(event)">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <input id="name" placeholder="Tu nombre" required />
+            <input id="email" type="email" placeholder="Tu email" required />
+          </div>
+          <select id="plan">
+            <option value="Starter">Starter ($99)</option>
+            <option value="Pro">Pro ($249)</option>
+            <option value="Plus">Plus ($399)</option>
+          </select>
+          <textarea id="details" rows="5" placeholder="Describe tu negocio, secciones y objetivos…" required></textarea>
+          <div class="cta-row">
+            <button class="btn" type="submit">Enviar brief</button>
+            <a class="btn btn-alt" href="https://t.me/MaestroDirectorBot" target="_blank">Hablar en Telegram</a>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section faq">
+      <h2>Preguntas frecuentes</h2>
+      <div class="grid-3">
+        <div class="item">
+          <div class="q" onclick="toggleFAQ(this)">¿En cuánto tiempo entregan?</div>
+          <div class="a">Depende del plan y contenido. Normalmente horas para Starter y 1–3 días para Pro/Plus.</div>
+        </div>
+        <div class="item">
+          <div class="q" onclick="toggleFAQ(this)">¿Puedo pagar con cripto?</div>
+          <div class="a">Sí, el checkout acepta múltiples criptomonedas a través de NOWPayments.</div>
+        </div>
+        <div class="item">
+          <div class="q" onclick="toggleFAQ(this)">¿Incluye dominio o hosting?</div>
+          <div class="a">Incluye deploy en Netlify (CDN). El dominio puede apuntarse después o comprar uno nuevo.</div>
+        </div>
+      </div>
+    </section>
+
+    <div style="height:32px"></div>
+  </main>
+
+  <script>
+    function toggleFAQ(el){ el.parentElement.classList.toggle('open'); }
+
+    // Envío del brief: compone un mensaje y abre Telegram
+    function sendBrief(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const plan = document.getElementById('plan').value;
+      const details = document.getElementById('details').value.trim();
+
+      const msg = `Build Sites Brief%0AName: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(email)}%0APlan: ${encodeURIComponent(plan)}%0ADetails: ${encodeURIComponent(details)}`;
+      // Cambia el user del bot si es otro:
+      const tg = `https://t.me/MaestroDirectorBot?start=${msg}`;
+      window.open(tg,'_blank');
+      return false;
+    }
+  </script>
+</body>
+</html>

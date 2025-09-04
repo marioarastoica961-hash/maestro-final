@@ -1,0 +1,23 @@
+﻿<!doctype html>
+<meta charset="utf-8">
+<title>JSON test</title>
+<pre id="out" style="white-space:pre-wrap;font-family:ui-monospace,Consolas,monospace"></pre>
+<script>
+(async () => {
+  const url = '/assets/data/agents.json?bust=' + Date.now();
+  const out = document.getElementById('out');
+  try {
+    const r = await fetch(url, { cache: 'no-store' });
+    const t = await r.text();
+    const numbered = t.split('\n').map((l,i)=>String(i+1).padStart(4,' ')+'  '+l).join('\n');
+    out.textContent = `URL: ${url}\nHTTP: ${r.status}\n\n` + numbered;
+    JSON.parse(t);
+    out.textContent = 'âœ… Parse OK\n\n' + out.textContent;
+  } catch (e) {
+    out.textContent = 'âŒ Parse ERROR: ' + e.message + '\n\n' + out.textContent;
+  }
+})();
+</script>
+
+
+

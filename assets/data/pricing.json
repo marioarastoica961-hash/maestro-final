@@ -1,0 +1,8 @@
+{
+  "currency": "USD",
+  "deliverySurcharges": {
+    "01h": 24,
+    "24h": 12,
+    "48h": 3
+  }
+}

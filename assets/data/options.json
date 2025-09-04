@@ -1,0 +1,86 @@
+{
+  "templates": [
+    {
+      "id": "ventas-b2b",
+      "name": "Ventas B2B",
+      "channels": ["Email (Gmail)", "LinkedIn (DM)", "Webchat"],
+      "integrations": ["HubSpot", "Pipedrive", "Google Sheets", "Zapier"],
+      "capabilities": ["Cualificación de leads", "Prospección / Outreach", "Seguimiento y recordatorios", "Agendado de reuniones", "Enriquecimiento de leads", "KPI y reportes"]
+    },
+    {
+      "id": "ecommerce",
+      "name": "E-commerce",
+      "channels": ["WhatsApp (Cloud API)", "Instagram DM", "Email (SendGrid)"],
+      "integrations": ["Shopify", "Stripe", "Google Sheets", "GA4", "Klaviyo"],
+      "capabilities": ["Atención FAQ / Base de conocimiento", "Triage y enrutamiento", "Resúmenes de conversaciones", "Cross-sell / Upsell", "KPI y reportes"]
+    },
+    {
+      "id": "soporte",
+      "name": "Soporte",
+      "channels": ["Webchat", "Slack", "Email (Gmail)"],
+      "integrations": ["Zendesk", "Freshdesk", "Notion", "Google Drive"],
+      "capabilities": ["Triage y enrutamiento", "Resúmenes de conversaciones", "Detección de intención / Sentimiento", "FAQ / Conocimiento", "Escalaciones con aprobación humana"]
+    }
+  ],
+
+  "channels": [
+    "WhatsApp (Cloud API)",
+    "Telegram",
+    "Webchat",
+    "Email (Gmail)",
+    "Email (SendGrid)",
+    "SMS (Twilio)",
+    "Instagram DM",
+    "Facebook Messenger",
+    "LinkedIn (DM)",
+    "Slack",
+    "Discord",
+    "Microsoft Teams",
+    "Teléfono / IVR (Twilio Voice)",
+    "Intercom Chat",
+    "Zendesk Messaging"
+  ],
+
+  "integrations": {
+    "CRM": ["Salesforce", "HubSpot", "Pipedrive", "Zoho CRM"],
+    "Helpdesk": ["Zendesk", "Freshdesk", "Intercom", "Front"],
+    "E-commerce": ["Shopify", "WooCommerce", "Magento", "BigCommerce"],
+    "Pagos": ["Stripe", "PayPal", "Mercado Pago"],
+    "Marketing / Email": ["Mailchimp", "Klaviyo", "ActiveCampaign", "SendGrid"],
+    "Ads / Social": ["Google Ads", "Facebook Ads", "LinkedIn Ads", "TikTok Ads", "Facebook Graph", "Instagram Graph", "LinkedIn API", "X / Twitter API"],
+    "Docs / Suite": ["Gmail", "Google Sheets", "Google Drive", "Google Calendar", "Google Docs", "Outlook 365", "OneDrive", "SharePoint"],
+    "Automatización": ["Zapier", "Make", "n8n"],
+    "Analytics / Datos": ["GA4", "Mixpanel", "Looker Studio (vía Sheets)", "BigQuery", "Redshift", "Snowflake"],
+    "DB / Storage": ["PostgreSQL", "MySQL", "MongoDB", "Amazon S3", "Google Cloud Storage", "Azure Blob"],
+    "Project": ["Jira", "Asana", "ClickUp", "Trello"],
+    "CMS / SEO": ["WordPress", "Webflow", "Contentful", "Ghost", "Strapi", "Ahrefs", "Semrush"],
+    "Otros": ["Google Maps/Geocoding", "OpenWeather", "Clearbit", "Hunter"]
+  },
+
+  "capabilities": [
+    "Cualificación de leads",
+    "Prospección / Outreach",
+    "Seguimiento y recordatorios",
+    "Agendado de reuniones",
+    "Enriquecimiento de leads",
+    "Cotizaciones / Propuestas",
+    "Generación de contratos",
+    "Facturación / Órdenes / Pagos",
+    "Cross-sell / Upsell",
+    "Onboarding de clientes",
+    "Atención FAQ / Base de conocimiento",
+    "Triage y enrutamiento",
+    "Resúmenes de conversaciones",
+    "Detección de intención / Sentimiento",
+    "RAG desde documentos",
+    "Extracción de datos / Web scraping simple",
+    "Publicación de contenidos (Blog/Ads/Social)",
+    "KPI y reportes",
+    "Automatizaciones y Webhooks",
+    "Moderación y cumplimiento",
+    "Multi-idioma + memoria conversacional",
+    "Flujos de aprobación (humano en el loop)",
+    "Integración con Bases de Datos",
+    "Seguridad y control de acceso"
+  ]
+}

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Your Cart — Maestro Market</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body{margin:0;background:#f7f7f7;font-family:Arial,Helvetica,sans-serif}
+    header{background:#0b8a56;color:#fff;padding:18px 20px;position:sticky;top:0;z-index:100}
+    header .bar{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+    header nav a{color:#fff;text-decoration:none;margin-left:16px;font-weight:700}
+    .wrap{max-width:900px;margin:0 auto;padding:28px 20px}
+    table{width:100%;border-collapse:collapse;background:#fff;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.06);overflow:hidden}
+    th,td{padding:14px;border-bottom:1px solid #eee;text-align:left}
+    tfoot td{font-weight:900}
+    .btn{display:inline-block;padding:10px 14px;border-radius:12px;text-decoration:none;font-weight:800}
+    .btn-primary{background:#18a362;color:#fff}
+    .btn-ghost{background:#083f2c;color:#fff}
+    .btn-danger{background:#c0392b;color:#fff}
+  </style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <strong style="font-size:18px">Maestro Market</strong>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/agents/">AI Agents</a>
+      <a href="/leads/">Leads</a>
+      <a href="/cart/">Cart <span id="cart-badge"></span></a>
+      <a href="/account/">My Account</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>Your cart</h1>
+  <div id="empty" style="display:none">Your cart is empty. <a href="/agents/">Browse agents</a>.</div>
+  <div id="tableWrap"></div>
+
+  <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+    <button id="clear" class="btn btn-danger">Clear cart</button>
+    <a class="btn btn-primary" href="/checkout/">Go to checkout</a>
+  </div>
+</main>
+
+<footer style="background:#0b8a56;color:#fff;text-align:center;padding:20px">© 2025 Maestro Market</footer>
+
+<script type="module">
+  import { getCart, saveCart, clearCart, removeFromCart, fmtPrice, cartTotal, updateCartBadge } from '/js/cart.js';
+
+  const tableWrap = document.getElementById('tableWrap');
+  const empty = document.getElementById('empty');
+
+  function render(){
+    const items = getCart();
+    updateCartBadge();
+
+    if (!items.length){
+      tableWrap.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+
+    const rows = items.map((it,idx)=>`
+      <tr>
+        <td>${it.name}<div style="opacity:.7;font-size:12px">${it.model}</div></td>
+        <td>$${it.amount}</td>
+        <td>
+          <input type="number" min="1" value="${it.qty}" data-idx="${idx}" style="width:70px;padding:8px;border:1px solid #ddd;border-radius:8px">
+        </td>
+        <td>$${(it.amount*it.qty).toFixed(2)}</td>
+        <td><button data-del="${idx}" class="btn btn-danger">Remove</button></td>
+      </tr>
+    `).join('');
+
+    tableWrap.innerHTML = `
+      <table>
+        <thead><tr><th>Item</th><th>Price</th><th>Qty</th><th>Subtotal</th><th></th></tr></thead>
+        <tbody>${rows}</tbody>
+        <tfoot><tr><td colspan="3">Total</td><td colspan="2">$${cartTotal().toFixed(2)}</td></tr></tfoot>
+      </table>
+    `;
+
+    // quantity change
+    tableWrap.querySelectorAll('input[type=number]').forEach(inp=>{
+      inp.addEventListener('input',()=>{
+        const idx = +inp.dataset.idx;
+        const items = getCart();
+        items[idx].qty = Math.max(1, parseInt(inp.value||'1',10));
+        saveCart(items);
+        render();
+      });
+    });
+
+    // delete
+    tableWrap.querySelectorAll('button[data-del]').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        removeFromCart(+btn.dataset.del);
+        render();
+      });
+    });
+  }
+
+  document.getElementById('clear').addEventListener('click',()=>{
+    clearCart();
+    render();
+  });
+
+  render();
+</script>
+</body>
+</html>

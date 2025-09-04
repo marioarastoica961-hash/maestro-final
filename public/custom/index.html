@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Custom Build (v7) — Maestro Market</title>
+  <link rel="stylesheet" href="/theme.css" />
+  <link rel="stylesheet" href="/site.css" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <style>
+    :root{--bg:#f5f8f7;--card:#fff;--text:#0f1b16;--muted:#5f706a;--brand1:#0f8f66;--brand2:#16b274;--brand3:#0a6f52;--ring:#c9efe0;--border:#e6eeeb;--pill:#e8f7f1}
+    *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 Inter,system-ui,Segoe UI,Roboto,Arial}
+    a{color:var(--brand3);text-decoration:none}a:hover{text-decoration:underline}
+    .nav{background:linear-gradient(180deg,var(--brand1),var(--brand2));position:sticky;top:0;z-index:50;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+    .nav .wrap{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:12px 16px}
+    .brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:900;font-size:20px}
+    .nav ul{display:flex;gap:18px;list-style:none;margin:0;padding:0}.nav a{color:#fff;font-weight:700;opacity:.95}.nav a:hover{opacity:1;text-decoration:underline}
+    .hero{background:linear-gradient(180deg,var(--brand2),var(--brand1));color:#fff;padding:56px 16px 44px}
+    .wrap{max-width:1200px;margin:0 auto;padding:0 16px}.title{font-size:42px;margin:0 0 10px}.subtitle{margin:0;opacity:.95}
+    .pillbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+    .pill{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);color:#fff;padding:6px 10px;border-radius:999px;font-weight:700;font-size:13px}
+    .main{margin-top:-28px;padding-bottom:40px}.grid{display:grid;gap:16px}@media(min-width:900px){.grid-2{grid-template-columns:1fr 1fr}}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px;box-shadow:0 14px 40px rgba(16,40,36,.06)}
+    label.field{display:block}label.field>span{display:block;font-weight:800;margin:2px 0 6px 2px;color:#213}
+    input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:#fff;outline:none;transition:border .15s,box-shadow .15s}
+    input:focus,select:focus,textarea:focus{border-color:var(--brand2);box-shadow:0 0 0 3px var(--ring)}textarea{resize:vertical;min-height:140px}
+    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .btn{appearance:none;border:0;border-radius:14px;padding:12px 16px;font-weight:900;cursor:pointer}
+    .btn.primary{background:#0e875f;color:#fff}.btn.primary:hover{background:#0a6f52}
+    .btn.ghost{background:#fff;border:1px solid var(--border);color:var(--brand3)}
+    .muted{color:var(--muted)}.sep{border:none;border-top:1px solid var(--border);margin:22px 0}.status{min-height:1.2em;margin-top:6px}
+    .features{display:grid;gap:14px;margin-top:10px}@media(min-width:900px){.features{grid-template-columns:repeat(3,1fr)}}
+    .feat{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px}.feat b{display:block;margin-bottom:6px}
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap">
+      <a class="brand" href="/"><img src="/favicon.svg" alt="" width="24" height="24"/><span>Maestro Market</span></a>
+      <ul>
+        <li><a href="/">Home</a></li><li><a href="/agents/">AI Agents</a></li><li><a href="/leads/">Leads</a></li>
+        <li><a href="/build-sites/">Build Sites</a></li><li><a href="/custom/">Custom Build</a></li>
+        <li><a href="/support/">Support</a></li><li><a href="/account/">My Account</a></li><li><a href="/cart/">Cart</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <h1 class="title">Custom Build (v7)</h1>
+      <p class="subtitle">Tell us what you need. We design and deliver. <b>Crypto checkout</b> & <b>instant Telegram delivery</b>.</p>
+      <div class="pillbar">
+        <span class="pill">Unique AI Agents</span><span class="pill">Custom Websites</span>
+        <span class="pill">API Integrations</span><span class="pill">Telegram Delivery</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap" style="margin-top:-28px;padding-bottom:40px">
+    <section class="card">
+      <form id="custom-form" class="grid grid-2">
+        <label class="field"><span>Your name</span><input name="name" type="text" placeholder="e.g. Maria Popescu" required></label>
+        <label class="field"><span>Your email</span><input name="email" type="email" placeholder="you@example.com" required></label>
+        <label class="field"><span>Build type</span>
+          <select name="build_type" required><option value="ai_agent">AI Agent</option><option value="website">Custom Website</option><option value="api_integration">API Integration</option></select>
+        </label>
+        <label class="field"><span>Delivery speed</span>
+          <select name="speed" required><option value="48h">48h (+$3)</option><option value="24h">24h (+$12)</option><option value="01h">1h (+$24)</option></select>
+        </label>
+        <label class="field" style="grid-column:1/-1"><span>Describe what you need</span>
+          <textarea name="notes" placeholder="What should your agent/website do? Data sources, workflows, tone, languages…"></textarea>
+        </label>
+        <label class="field"><span>Budget (USD)</span>
+          <select name="budget" required><option value="49">$49 — Starter</option><option value="99" selected>$99 — Standard</option><option value="199">$199 — Pro</option></select>
+        </label>
+        <label class="field"><span>Telegram @username (delivery)</span><input name="telegram" type="text" placeholder="@yourusername"></label>
+        <label class="row" style="grid-column:1/-1"><input type="checkbox" name="terms" required>
+          <span class="muted">I agree to proceed. Custom orders are delivered on Telegram after crypto payment.</span>
+        </label>
+        <div class="row" style="grid-column:1/-1">
+          <button class="btn primary" id="submitBtn" type="submit">Submit & Pay with Crypto</button>
+          <a class="btn ghost" href="/agents/">Browse 300+ AI Agents</a>
+          <a class="btn ghost" href="https://t.me/MaestroDirectorBot" target="_blank" rel="noopener">Chat on Telegram</a>
+        </div>
+        <p id="status" class="status muted" style="grid-column:1/-1"></p>
+      </form>
+      <hr class="sep" />
+      <div class="features">
+        <div class="feat"><b>Instant setup</b><span class="muted">Pay with crypto and receive on Telegram within the selected timeframe.</span></div>
+        <div class="feat"><b>Crypto-first</b><span class="muted">BTC, ETH, USDT, USDC via NOWPayments. Secure and fast.</span></div>
+        <div class="feat"><b>Personalized</b><span class="muted">We build to your spec: flows, tone, data sources, languages.</span></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- referencia con cache busting -->
+  <script src="/custom/build.v7.js?v=7" type="module"></script>
+</body>
+</html>

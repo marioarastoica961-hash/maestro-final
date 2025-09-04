@@ -1,0 +1,95 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Verified Leads Marketplace</title>
+  <link rel="stylesheet" href="/site.css" />
+  <style>
+    body { background:#fafafa; }
+    .wrap { max-width: 1100px; margin: 20px auto; padding: 0 16px; }
+    .toolbar { position: sticky; top: 0; z-index: 50; background: #fff; border-bottom:1px solid #eee; padding:10px 0; }
+    .bar { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    .input, select { padding:8px 10px; border:1px solid #e5e7eb; border-radius:8px; background:#fff; }
+    .btn { border:0; border-radius:8px; padding:8px 12px; cursor:pointer; }
+    .btn-primary { background:#0d7b52; color:#fff; }
+    .btn-ghost { background:#f4f6f8; color:#0d7b52; border:1px solid #e5e7eb; }
+    .ghost-link { padding:8px 12px; border:1px solid #e5e7eb; border-radius:8px; background:#f8fafc; color:#0d7b52; text-decoration:none; }
+    #leads-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px; margin-top:12px; }
+    .card { border:1px solid #e5e7eb; border-radius:12px; padding:16px; background:#fff; display:flex; flex-direction:column; gap:8px; }
+    .title { font-weight:700; font-size:18px; }
+    .muted { color:#666; }
+    .badge { display:inline-block; padding:2px 8px; border-radius:999px; font-size:12px; border:1px solid #e5e7eb; background:#f8fafc; }
+    .footer { display:flex; justify-content:space-between; align-items:center; margin-top:6px; }
+    .pagination { display:flex; gap:6px; justify-content:center; margin:12px 0; }
+    .pagination button { min-width:38px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Verified Leads Marketplace</h1>
+      <p class="muted">
+        Leads verificados con consentimiento/licencia. Pago crypto/fiat. Entrega por Telegram o email.
+      </p>
+    </header>
+
+    <!-- TOOLBAR (sticky) -->
+    <section class="toolbar">
+      <div class="bar">
+        <input id="q" class="input" placeholder="Search..." />
+        <select id="country" class="input"><option value="">Country (All)</option></select>
+        <select id="industry" class="input"><option value="">Industry (All)</option></select>
+        <select id="source" class="input"><option value="">Source (All)</option></select>
+        <select id="maxprice" class="input">
+          <option value="">Max Price USD</option>
+          <option value="25">≤ $25</option>
+          <option value="50">≤ $50</option>
+          <option value="75">≤ $75</option>
+          <option value="100">≤ $100</option>
+        </select>
+        <select id="sort" class="input">
+          <option value="recent">Most recent</option>
+          <option value="oldest">Oldest first</option>
+          <option value="price-asc">Price ↑</option>
+          <option value="price-desc">Price ↓</option>
+          <option value="name-asc">Name A→Z</option>
+          <option value="name-desc">Name Z→A</option>
+        </select>
+        <button id="apply" class="btn btn-primary">Apply</button>
+
+        <!-- Widget cupón -->
+        <input id="coupon" class="input" placeholder="Cupón (opcional)" style="margin-left:auto" />
+        <button id="saveCoupon" class="btn btn-ghost">Guardar cupón</button>
+        <a class="ghost-link" href="/cart/">🛒 Carrito</a>
+      </div>
+
+      <!-- Acciones PRO -->
+      <div class="bar" style="margin-top:8px">
+        <button id="addAll" class="btn btn-ghost">Agregar TODOS los filtrados</button>
+        <button id="addSelected" class="btn btn-ghost">Agregar SELECCIONADOS</button>
+        <button id="buyNow" class="btn btn-ghost">Comprar filtrados AHORA</button>
+        <button id="buySelected" class="btn btn-ghost">Comprar seleccionados AHORA</button>
+        <button id="export" class="btn btn-ghost">Exportar filtrados (CSV)</button>
+        <button id="share" class="btn btn-ghost">Compartir filtro</button>
+
+        <!-- Paginación -->
+        <select id="pageSize" class="input">
+          <option value="12">12 / página</option>
+          <option value="24">24 / página</option>
+          <option value="48">48 / página</option>
+          <option value="96">96 / página</option>
+        </select>
+        <span id="stats" class="muted" style="margin-left:auto"></span>
+      </div>
+    </section>
+
+    <div id="leads-error" style="color:#b00;margin-top:10px;"></div>
+    <div id="leads-grid"></div>
+    <div id="leads-pages" class="pagination"></div>
+  </div>
+
+  <!-- Script principal de la página -->
+  <script src="/leads/leads.js"></script>
+</body>
+</html>

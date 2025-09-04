@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Leads — Maestro Market</title>
+  <link rel="stylesheet" href="/theme.css" />
+  <style>
+    :root{
+      --mm-green:#0b7a4b; --mm-green-dark:#095c37; --mm-bg:#f6faf8; --mm-text:#101828;
+      --radius:14px;
+    }
+    body{background:var(--mm-bg); color:var(--mm-text);}
+    header.site{position:sticky;top:0;z-index:20;background:linear-gradient(90deg,#0ca56a,#0b7a4b);color:#fff}
+    header.site .wrap{max-width:1200px;margin:auto;display:flex;align-items:center;gap:16px;padding:12px 16px}
+    header.site a{color:#fff;text-decoration:none;font-weight:600}
+    main{max-width:1200px;margin:auto;padding:24px 16px}
+    h1{font-size:2rem;margin:.25rem 0 1rem}
+    .top-row{display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap}
+    .lang{display:flex;gap:8px;align-items:center}
+    .lang select{border-radius:var(--radius);padding:8px 12px;border:1px solid #d0d5dd;background:#fff}
+
+    .filters{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:18px 0}
+    @media (max-width:1000px){.filters{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:560px){.filters{grid-template-columns:1fr}}
+    .filters input,.filters select{padding:12px;border-radius:var(--radius);border:1px solid #d0d5dd;background:#fff}
+    .btn{background:var(--mm-green);color:#fff;border:0;border-radius:var(--radius);padding:12px 18px;font-weight:700;cursor:pointer}
+    .btn:hover{background:var(--mm-green-dark)}
+    .btn-outline{border:1px solid var(--mm-green);color:var(--mm-green);background:transparent}
+    .bar{display:flex;align-items:center;gap:12px;justify-content:space-between;margin:8px 0 20px}
+    .bar .stats{font-size:.95rem;color:#475467}
+    .bar .sort{display:flex;gap:8px;align-items:center}
+    .sort select{padding:10px;border-radius:var(--radius);border:1px solid #d0d5dd;background:#fff}
+
+    .leads{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    @media (max-width:1100px){.leads{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:700px){.leads{grid-template-columns:1fr}}
+    .card{background:#fff;border-radius:18px;box-shadow:0 10px 24px rgba(16,24,40,.08);padding:18px;display:flex;flex-direction:column;gap:6px}
+    .card h3{margin:0 0 4px;font-size:1.05rem}
+    .meta{color:#667085;font-size:.92rem}
+    .price{font-weight:800;margin-top:6px}
+    .chips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
+    .chip{background:#ecfdf3;color:#067647;border:1px solid #abefc6;border-radius:999px;padding:4px 10px;font-size:.8rem}
+    .cta{margin-top:10px;display:flex;gap:8px;align-items:center}
+    .skeleton{background:linear-gradient(90deg,#eee,#f7f7f7,#eee);background-size:200% 100%;animation:shimmer 1.2s infinite;border-radius:12px}
+    @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+    .sk-card{height:140px}
+    .empty{background:#fff;border:1px dashed #d0d5dd;border-radius:18px;padding:22px;text-align:center;color:#475467}
+
+    .pagination{display:flex;justify-content:center;gap:6px;margin-top:18px}
+    .page-btn{border:1px solid #d0d5dd;background:#fff;border-radius:10px;padding:8px 12px;cursor:pointer}
+    .page-btn.active{background:var(--mm-green);color:#fff;border-color:var(--mm-green)}
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site">
+    <div class="wrap">
+      <a href="/" style="display:flex;align-items:center;gap:8px"><span style="font-size:22px">🌿</span><strong>Maestro Market</strong></a>
+      <div style="flex:1"></div>
+      <nav style="display:flex;gap:16px">
+        <a href="/agents/">Agentes IA</a>
+        <a href="/leads/">Leads</a>
+        <a href="/build/">Build Sites</a>
+        <a href="/custom/">Crear a tu gusto</a>
+        <a href="/support/">Soporte</a>
+        <a href="/account/">Mi Cuenta</a>
+        <a href="/cart/">Carrito</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="top-row">
+      <div>
+        <h1 id="t-title">Verified Leads Marketplace</h1>
+        <p id="t-sub">Filter by country, industry, budget, or source. Instant crypto checkout. Delivery via Telegram.</p>
+      </div>
+      <div class="lang">
+        <label for="langSel" id="t-language">Language</label>
+        <select id="langSel">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters">
+      <input type="text" id="q" placeholder="Search by name, email or industry">
+      <select id="country"><option value="">Country (All)</option></select>
+      <select id="industry"><option value="">Industry (All)</option></select>
+      <select id="source">
+        <option value="">Source (All)</option>
+        <option>LinkedIn</option><option>Gmail</option><option>Telegram</option>
+      </select>
+      <input type="number" id="maxPrice" placeholder="Max Price USD" />
+      <button class="btn" id="applyBtn">Apply</button>
+    </div>
+
+    <!-- Bar -->
+    <div class="bar">
+      <div class="stats" id="stats">—</div>
+      <div class="sort">
+        <span id="t-sort">Sort</span>
+        <select id="sortBy">
+          <option value="recent">Most recent</option>
+          <option value="price_asc">Price: Low to High</option>
+          <option value="price_desc">Price: High to Low</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- List -->
+    <div id="list" class="leads">
+      <!-- skeletons -->
+      <div class="card skeleton sk-card"></div>
+      <div class="card skeleton sk-card"></div>
+      <div class="card skeleton sk-card"></div>
+    </div>
+
+    <div id="pager" class="pagination" hidden></div>
+  </main>
+
+  <script>
+    // ---------- i18n ----------
+    const I18N = {
+      en: {
+        title: "Verified Leads Marketplace",
+        sub: "Filter by country, industry, budget, or source. Instant crypto checkout. Delivery via Telegram.",
+        language: "Language",
+        apply: "Apply",
+        sort: "Sort",
+        mostRecent: "Most recent",
+        lowToHigh: "Price: Low to High",
+        highToLow: "Price: High to Low",
+        countryAll: "Country (All)",
+        industryAll: "Industry (All)",
+        sourceAll: "Source (All)",
+        searchPh: "Search by name, email or industry",
+        maxPricePh: "Max Price USD",
+        buy: "Buy with crypto",
+        empty: "No leads found",
+        loadingErr: "Error loading leads."
+      },
+      es: {
+        title: "Marketplace de Leads Verificados",
+        sub: "Filtra por país, industria, presupuesto o fuente. Pago cripto instantáneo. Entrega por Telegram.",
+        language: "Idioma",
+        apply: "Aplicar",
+        sort: "Ordenar",
+        mostRecent: "Más recientes",
+        lowToHigh: "Precio: menor a mayor",
+        highToLow: "Precio: mayor a menor",
+        countryAll: "País (Todos)",
+        industryAll: "Industria (Todas)",
+        sourceAll: "Fuente (Todas)",
+        searchPh: "Busca por nombre, email o industria",
+        maxPricePh: "Precio máximo USD",
+        buy: "Comprar con cripto",
+        empty: "Sin resultados",
+        loadingErr: "Error al cargar los leads."
+      }
+    };
+    const navLang = (navigator.language || "en").slice(0,2);
+    const savedLang = localStorage.getItem("mm_lang");
+    let LANG = savedLang || (navLang === "es" ? "es" : "en");
+
+    const $ = (s)=>document.querySelector(s);
+
+    function applyI18n(){
+      const t = I18N[LANG];
+      document.getElementById("t-title").textContent = t.title;
+      document.getElementById("t-sub").textContent = t.sub;
+      document.getElementById("t-language").textContent = t.language;
+      $("#applyBtn").textContent = t.apply;
+      $("#t-sort").textContent = t.sort;
+
+      $("#country").options[0].textContent = t.countryAll;
+      $("#industry").options[0].textContent = t.industryAll;
+      $("#source").options[0].textContent = t.sourceAll;
+
+      $("#q").placeholder = t.searchPh;
+      $("#maxPrice").placeholder = t.maxPricePh;
+
+      const sort = $("#sortBy");
+      sort.options[0].textContent = t.mostRecent;
+      sort.options[1].textContent = t.lowToHigh;
+      sort.options[2].textContent = t.highToLow;
+    }
+
+    $("#langSel").value = LANG;
+    $("#langSel").addEventListener("change", e=>{
+      LANG = e.target.value; localStorage.setItem("mm_lang", LANG);
+      applyI18n(); render();
+    });
+    applyI18n();
+
+    // ---------- Data / Fallback ----------
+    const WORKER = "https://pay.hazelsophia.tech";
+    let ALL = [];
+    let page = 1, pageSize = 12, filtered = [];
+
+    async function loadLeads(){
+      try{
+        // 1) Intento JSON estático
+        const r1 = await fetch("/assets/data/leads.json",{cache:"no-store"});
+        if(r1.ok){
+          ALL = await r1.json();
+        }else{
+          // 2) Fallback a Worker dinámico
+          const r2 = await fetch(WORKER + "/leads/list");
+          if(!r2.ok) throw new Error("worker fail");
+          const d = await r2.json();
+          ALL = d.items || d; // por si devuelve {items:[]}
+        }
+      }catch(e){
+        $("#list").innerHTML = `<div class="empty">${I18N[LANG].loadingErr}</div>`;
+        return;
+      }
+      fillFilters(ALL);
+      applyFilters(); // inicia listado
+    }
+
+    function uniqueSorted(arr, key){
+      return [...new Set(arr.map(x=>x[key]).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+    }
+    function fillFilters(data){
+      const cSel = $("#country"), iSel = $("#industry");
+      uniqueSorted(data,"country").forEach(c=> cSel.innerHTML += `<option>${c}</option>`);
+      uniqueSorted(data,"industry").forEach(i=> iSel.innerHTML += `<option>${i}</option>`);
+    }
+
+    function applyFilters(){
+      const q = $("#q").value.trim().toLowerCase();
+      const c = $("#country").value;
+      const i = $("#industry").value;
+      const s = $("#source").value;
+      const p = Number($("#maxPrice").value || 0);
+
+      filtered = ALL.filter(l=>{
+        if(q && !(String(l.target).toLowerCase().includes(q) || String(l.email).toLowerCase().includes(q) || String(l.industry).toLowerCase().includes(q))) return false;
+        if(c && l.country!==c) return false;
+        if(i && l.industry!==i) return false;
+        if(s && l.source!==s) return false;
+        if(p && Number(l.price_usd)>p) return false;
+        return true;
+      });
+      page = 1;
+      sortData();
+      render();
+    }
+
+    function sortData(){
+      const s = $("#sortBy").value;
+      if(s==="price_asc") filtered.sort((a,b)=>Number(a.price_usd)-Number(b.price_usd));
+      else if(s==="price_desc") filtered.sort((a,b)=>Number(b.price_usd)-Number(a.price_usd));
+      else filtered.sort((a,b)=> (b.ts||0) - (a.ts||0)); // recientes por timestamp si existe
+    }
+
+    function render(){
+      const t = I18N[LANG];
+      const start = (page-1)*pageSize, end = start+pageSize;
+      const slice = filtered.slice(start,end);
+      const list = $("#list");
+      const stats = $("#stats");
+
+      stats.textContent = `${filtered.length} ${filtered.length===1?(LANG==='es'?'lead':'lead'): (LANG==='es'?'leads':'leads')}`;
+      list.innerHTML = "";
+
+      if(slice.length===0){
+        list.innerHTML = `<div class="empty">${t.empty}</div>`;
+        $("#pager").hidden = true;
+        return;
+      }
+
+      slice.forEach(l=>{
+        const chips = `<span class="chip">${l.source||'Source'}</span>`;
+        const price = (Number(l.price_usd)||0).toFixed(2);
+        const checkout = `/checkout/?slug=lead-${encodeURIComponent(l.id)}&delivery=instant`;
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <h3>${escapeHtml(l.target||'-')}</h3>
+          <div class="meta">✉️ ${escapeHtml(l.email||'-')}</div>
+          <div class="meta">🌍 ${escapeHtml(l.country||'-')} — 🏢 ${escapeHtml(l.industry||'-')}</div>
+          <div class="chips">${chips}</div>
+          <div class="price">$${price} USD</div>
+          <div class="cta">
+            <a class="btn" href="${checkout}">${t.buy}</a>
+            <button class="btn btn-outline" onclick="copy('${escapeAttr(l.email||'')}')">Copy email</button>
+          </div>
+        `;
+        list.appendChild(card);
+      });
+
+      // pager
+      const totalPages = Math.ceil(filtered.length/pageSize);
+      const pager = $("#pager");
+      pager.innerHTML = "";
+      if(totalPages>1){
+        for(let i=1;i<=totalPages;i++){
+          const b=document.createElement("button");
+          b.className="page-btn"+(i===page?" active":"");
+          b.textContent=i; b.onclick=()=>{page=i;render();};
+          pager.appendChild(b);
+        }
+        pager.hidden=false;
+      }else pager.hidden=true;
+    }
+
+    function copy(text){ navigator.clipboard.writeText(text||""); }
+    function escapeHtml(s){ return String(s).replace(/[&<>"]/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c])); }
+    function escapeAttr(s){ return String(s).replace(/"/g,'&quot;'); }
+
+    // events
+    $("#applyBtn").addEventListener("click", applyFilters);
+    $("#sortBy").addEventListener("change", ()=>{sortData();render();});
+    ["q","country","industry","source","maxPrice"].forEach(id=>{
+      $("#"+id).addEventListener("keydown",e=>{ if(e.key==="Enter"){e.preventDefault();applyFilters();}});
+    });
+
+    loadLeads();
+  </script>
+</body>
+</html>

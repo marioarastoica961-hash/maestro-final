@@ -1,0 +1,37 @@
+:root{
+  --green-1:#18c96e; --green-2:#0b7f4a;
+  --btn:#0a7a44; --btn-dark:#0a5c34; --ink:#16302b; --muted:#6c8a80; --bg:#f4faf7;
+  --radius:16px; --shadow:0 6px 18px rgba(0,0,0,.08);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Color Emoji", "Segoe UI Emoji";
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.45}
+.topbar{display:flex;gap:16px;align-items:center;padding:12px 18px;
+  background:linear-gradient(180deg,var(--green-1),var(--green-2)); color:#fff; position:sticky; top:0; z-index:20}
+.topbar .brand{font-weight:700;color:#fff;text-decoration:none}
+.topbar .spacer{flex:1}
+.topbar .link{color:#eafff4;text-decoration:none;padding:8px 10px;border-radius:10px}
+.btn{background:var(--btn);color:#fff;border:0;padding:10px 14px;border-radius:14px;cursor:pointer}
+.btn:hover{filter:brightness(.96)}
+.btn-dark{background:var(--btn-dark)}
+.badge{background:#fff1;border-radius:999px;padding:4px 10px;border:1px solid #fff3;color:#fff}
+.container{max-width:1180px;margin:0 auto;padding:22px}
+.hero{padding:56px 0;background:linear-gradient(180deg,var(--green-1),var(--green-2));color:#fff}
+.hero h1{font-size:48px; margin:8px 0}
+.pills{display:flex;flex-wrap:wrap;gap:10px}
+.pill{background:#e7f7ef;color:#1b4332;border-radius:999px;padding:8px 12px;border:1px solid #cfeede}
+.input, select{width:100%;padding:14px;border-radius:14px;border:1px solid #d9e8e2;background:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+.card{background:#fff;border-radius:18px;box-shadow:var(--shadow);overflow:hidden;border:1px solid #e6efe9}
+.card .img{height:140px;background:linear-gradient(180deg,var(--green-1),var(--green-2));display:flex;align-items:center;justify-content:center;color:#eafff4;font-weight:700}
+.card .body{padding:14px}
+.price{font-weight:700}
+.kicker{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.actions{display:flex;gap:10px;margin-top:10px}
+.mono{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace}
+.table{width:100%;border-collapse:collapse}
+.table td{padding:8px 6px;border-bottom:1px solid #e8f1ed}
+.small{font-size:13px;color:var(--muted)}
+.center{text-align:center}
+.hidden{display:none}

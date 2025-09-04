@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Custom Build — Maestro Market</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0d8a56" />
+  <link rel="stylesheet" href="/theme.css?v=14" />
+  <style>
+    :root{
+      --g1:#11a763; --g2:#097c50; --dk:#0b6e48; --pri:#18a362; --bg:#f6f9fb; --mut:#6b7280;
+      --card:#ffffff; --ring:#e5e7eb;
+    }
+    body{background:var(--bg)}
+    .hero{background:linear-gradient(180deg,var(--g1),var(--g2));color:#fff}
+    .max{max-width:1200px;margin:0 auto;padding:28px 20px}
+    .hero .max{padding:56px 20px}
+    h1{font-size:clamp(28px,4.2vw,42px);margin:0 0 8px}
+    .lead{opacity:.95;margin:0}
+    .grid{display:grid;gap:18px}
+    @media(min-width:980px){.grid-2{grid-template-columns:1.2fr .8fr;gap:30px;}}
+
+    .section{background:var(--card);border-radius:18px;box-shadow:0 12px 30px rgba(0,0,0,.06);padding:20px}
+    .title{display:flex;align-items:center;gap:10px;margin:0 0 10px}
+    .pill{background:rgba(24,163,98,.1);color:#0b6e48;border:1px solid rgba(24,163,98,.25);padding:4px 10px;border-radius:999px;font-weight:700;font-size:12px}
+    label{font-weight:700}
+    input,textarea,select{width:100%;padding:12px;border-radius:12px;border:1px solid var(--ring);background:#fff}
+    textarea{min-height:140px;resize:vertical}
+
+    /* Integrations */
+    .chips{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+    .chip{display:flex;align-items:center;gap:10px;border:1px solid var(--ring);background:#fff;border-radius:14px;padding:12px;cursor:pointer;transition:.15s}
+    .chip:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(0,0,0,.05)}
+    .chip input{accent-color:var(--pri)}
+    .ico{width:22px;height:22px;border-radius:6px;background:#e8f7ef;display:grid;place-items:center;font-weight:900;color:#138957}
+
+    /* Pricing options */
+    .opts{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+    .opt{border:2px solid var(--ring);border-radius:16px;padding:14px;cursor:pointer;background:#fff}
+    .opt h4{margin:0 0 6px}
+    .opt p{margin:0;color:var(--mut);font-size:14px}
+    .opt input{display:none}
+    .opt.active{border-color:var(--pri);box-shadow:0 10px 24px rgba(24,163,98,.18)}
+
+    /* Summary */
+    .summary{position:sticky;top:18px}
+    .price-lg{font-size:34px;font-weight:800}
+    .mut{color:var(--mut)}
+    .kpi{display:grid;grid-template-columns:1fr auto;gap:8px;margin:12px 0}
+    .line{height:1px;background:#eef2f7;margin:10px 0}
+
+    /* Buttons */
+    .row-btns{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{padding:12px 18px;border-radius:14px;border:none;font-weight:800;cursor:pointer}
+    .btn-primary{background:var(--pri);color:#fff}
+    .btn-dark{background:var(--dk);color:#fff}
+    .note{font-size:13px;color:var(--mut)}
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div id="site-header" data-src="/components/header.html?v=14"></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="max">
+      <h1>Tell us what you need</h1>
+      <p class="lead">Describe your use case and we’ll assemble the right agent stack. Instant delivery via Telegram after checkout.</p>
+    </div>
+  </section>
+
+  <main class="max grid grid-2" style="margin-top:-26px">
+    <!-- LEFT: FORM -->
+    <section class="section">
+      <div class="title"><span class="pill">Step 1</span><h2 style="margin:0">Contact</h2></div>
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <label for="name">Your name</label>
+          <input id="name" placeholder="Jane Doe" />
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="you@email.com" />
+        </div>
+        <div>
+          <label for="tg">Telegram (optional)</label>
+          <input id="tg" placeholder="@username" />
+        </div>
+      </div>
+
+      <div class="line"></div>
+
+      <div class="title"><span class="pill">Step 2</span><h2 style="margin:0">What do you want to automate?</h2></div>
+      <textarea id="usecase" placeholder="Lead gen, support inbox, reporting, outreach… (be specific)"></textarea>
+
+      <div class="line"></div>
+
+      <div class="title"><span class="pill">Step 3</span><h2 style="margin:0">Integrations</h2></div>
+      <div class="chips" id="int-wrap">
+        <label class="chip"><span class="ico">T</span><input type="checkbox" value="Telegram">Telegram</label>
+        <label class="chip"><span class="ico">S</span><input type="checkbox" value="Slack">Slack</label>
+        <label class="chip"><span class="ico">W</span><input type="checkbox" value="WhatsApp">WhatsApp</label>
+        <label class="chip"><span class="ico">G</span><input type="checkbox" value="Gmail">Gmail</label>
+        <label class="chip"><span class="ico">GS</span><input type="checkbox" value="Google Sheets">Google Sheets</label>
+        <label class="chip"><span class="ico">N</span><input type="checkbox" value="Notion">Notion</label>
+        <label class="chip"><span class="ico">WH</span><input type="checkbox" value="Webhooks">Webhooks</label>
+        <!-- Add more chips as necessary -->
+      </div>
+
+      <div class="line"></div>
+
+      <div class="title"><span class="pill">Step 4</span><h2 style="margin:0">Budget</h2></div>
+      <div class="opts" id="budget">
+        <label class="opt active">
+          <input type="radio" name="budget" value="99-199" checked>
+          <h4>$99–$199</h4>
+          <p>Starter — 1 agent, light setup</p>
+        </label>
+        <label class="opt">
+          <input type="radio" name="budget" value="200-499">
+          <h4>$200–$499</h4>
+          <p>Standard — 1–2 agents + integrations</p>
+        </label>
+        <label class="opt">
+          <input type="radio" name="budget" value="500-999">
+          <h4>$500–$999</h4>
+          <p>Pro — multi-agent orchestrations</p>
+        </label>
+        <label class="opt">
+          <input type="radio" name="budget" value="1000+">
+          <h4>$1,000+</h4>
+          <p>Enterprise — custom flows</p>
+        </label>
+      </div>
+
+      <div class="line"></div>
+
+      <div class="title"><span class="pill">Step 5</span><h2 style="margin:0">Deadline</h2></div>
+      <div class="opts" id="deadline">
+        <label class="opt active"><input type="radio" name="deadline" value="48h" checked><h4>48 hours</h4><p>Economy (+$3)</p></label>
+        <label class="opt"><input type="radio" name="deadline" value="24h"><h4>1 week</h4><p>Standard (+$12)</p></label>
+        <label class="opt"><input type="radio" name="deadline" value="01h"><h4>Express</h4><p>Under 24 hours (+$24)</p></label>
+        <label class="opt"><input type="radio" name="deadline" value="flex"><h4>Flexible</h4><p>We’ll propose a plan</p></label>
+      </div>
+
+      <div class="line"></div>
+
+      <div class="row-btns">
+        <button id="submit" class="btn btn-primary">Request custom build</button>
+        <a class="btn btn-dark" href="/agents/">Browse AI Agents</a>
+        <span class="note">We reply within a few hours via Telegram or email.</span>
+      </div>
+    </section>
+
+    <!-- RIGHT: SUMMARY -->
+    <aside class="section summary">
+      <div class="title"><span class="pill">Summary</span><h2 style="margin:0">Estimate</h2></div>
+      <div class="kpi"><span class="mut">Budget</span><b id="sumBudget">$99–$199</b></div>
+      <div class="kpi"><span class="mut">Deadline</span><b id="sumDeadline">48 hours</b></div>
+      <div class="kpi"><span class="mut">Integrations</span><b id="sumInts">0 selected</b></div>
+      <div class="line"></div>
+      <div class="mut">Estimated total*</div>
+      <div class="price-lg" id="sumPrice">$99–$199</div>
+      <div class="note">*Exact quote confirmed after scoping your use case.</div>
+    </aside>
+  </main>
+
+  <!-- Footer -->
+  <div id="site-footer" data-src="/components/footer.html?v=3"></div>
+
+  <!-- Includes header/footer -->
+  <script>
+    (async () => {
+      const include = async (host) => {
+        const src = host.getAttribute('data-src');
+        if(!src) return;
+        host.innerHTML = await (await fetch(src, { cache: 'no-store' })).text();
+      };
+      await Promise.all([...document.querySelectorAll('[data-src]')].map(include));
+    })();
+  </script>
+
+  <!-- Interactions + submit -->
+  <script>
+    function activate(groupEl, target){
+      [...groupEl.querySelectorAll('.opt')].forEach(el => el.classList.remove('active'));
+      target.closest('.opt').classList.add('active');
+    }
+    const $ = (s)=>document.querySelector(s);
+    const budgetWrap = $('#budget');
+    const deadlineWrap = $('#deadline');
+    const sumBudget = $('#sumBudget');
+    const sumDeadline = $('#sumDeadline');
+    const sumInts = $('#sumInts');
+    const sumPrice = $('#sumPrice');
+
+    budgetWrap.addEventListener('change', (e)=>{
+      if(e.target.name==='budget'){ activate(budgetWrap, e.target); updateSummary(); }
+    });
+    deadlineWrap.addEventListener('change', (e)=>{
+      if(e.target.name==='deadline'){ activate(deadlineWrap, e.target); updateSummary(); }
+    });
+    document.getElementById('int-wrap').addEventListener('change', updateSummary);
+
+    function updateSummary(){
+      const b = budgetWrap.querySelector('input[name="budget"]:checked')?.value || '99-199';
+      const d = deadlineWrap.querySelector('input[name="deadline"]:checked')?.value || '48h';
+      const ints = [...document.querySelectorAll('#int-wrap input:checked')].map(i=>i.value);
+      sumBudget.textContent = b.replace('-', '–').replace('+', '+');
+      sumDeadline.textContent = (d==='01h' ? 'Express' : d==='24h' ? '1 week' : d==='48h' ? '48 hours' : 'Flexible');
+      sumInts.textContent = `${ints.length} selected`;
+      sumPrice.textContent = '$' + (b.replace('+','+'));
+    }
+    updateSummary();
+
+    // Submit: send to Telegram OR Worker
+    document.getElementById('submit').addEventListener('click', async ()=>{
+      const name = $('#name').value.trim();
+      const email = $('#email').value.trim();
+      const tg = $('#tg').value.trim();
+      const usecase = $('#usecase').value.trim();
+      const integrations = [...document.querySelectorAll('#int-wrap input:checked')].map(i=>i.value);
+      const budget = budgetWrap.querySelector('input[name="budget"]:checked')?.value || '99-199';
+      const deadline = deadlineWrap.querySelector('input[name="deadline"]:checked')?.value || '48h';
+
+      if(!email){ alert('Please add your email.'); return; }
+      if(!usecase){ alert('Please describe your use case.'); return; }
+
+      const msg = encodeURIComponent(
+        `Custom Build Request\n` +
+        `Name: ${name || '-'}\nEmail: ${email}\nTelegram: ${tg || '-'}\n\n` +
+        `Use case:\n${usecase}\n\n` +
+        `Integrations: ${integrations.join(', ') || '-'}\n` +
+        `Budget: ${budget}\nDeadline: ${deadline}`
+      );
+      window.open(`https://t.me/MaestroDirectorBot?start=${msg}`, '_blank');
+    });
+  </script>
+</body>
+</html>

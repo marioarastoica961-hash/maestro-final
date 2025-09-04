@@ -1,0 +1,94 @@
+﻿<!-- public/components/header.html -->
+<header class="mm-header">
+  <div class="mm-shell">
+    <a class="mm-brand" href="/">Maestro Market</a>
+
+    <button class="mm-burger" aria-label="Open menu" id="mmBurger">☰</button>
+
+    <nav class="mm-nav" id="mmNav">
+      <a href="/"             data-match="/">Home</a>
+      <a href="/agents/"      data-match="/agents/">Agentes IA</a>
+      <a href="/leads/"       data-match="/leads/">Leads</a>
+      <a href="/sites/"       data-match="/sites/">Build Sites</a>
+      <a href="/custom/"      data-match="/custom/">Crear a tu gusto</a>
+      <a href="/support/"     data-match="/support/">Soporte</a>
+      <a href="/account/"     data-match="/account/">Mi Cuenta</a>
+      <a href="/cart/"        data-match="/cart/" class="mm-cart">
+        Carrito <span id="mmCartBadge" class="mm-badge">0</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  :root{
+    --mm-green:#0B8A55; --mm-green-2:#0a7b4c; --mm-bg:#fff; --mm-text:#0d1b2a;
+  }
+  .mm-header{
+    position:sticky; top:0; z-index:1000; background:linear-gradient(90deg,#0fa36b,#0b8a55);
+    color:#fff; box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  }
+  .mm-shell{
+    max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:16px;
+    padding:12px 16px;
+  }
+  .mm-brand{
+    font-weight:800; font-size:20px; color:#fff; text-decoration:none; letter-spacing:.2px;
+  }
+  .mm-nav{
+    margin-left:auto; display:flex; flex-wrap:wrap; gap:14px; align-items:center;
+  }
+  .mm-nav a{
+    color:#eaf7f1; text-decoration:none; padding:8px 10px; border-radius:10px; font-weight:600;
+  }
+  .mm-nav a:hover{ background:rgba(255,255,255,.12); }
+  .mm-nav a.mm-active{ background:#fff; color:var(--mm-green); }
+  .mm-badge{
+    background:#fff; color:var(--mm-green); border-radius:999px; padding:2px 8px; font-size:12px; margin-left:6px;
+  }
+  .mm-burger{
+    display:none; margin-left:auto; background:transparent; border:0; color:#fff; font-size:22px; line-height:1;
+  }
+  @media (max-width:900px){
+    .mm-burger{ display:block; }
+    .mm-nav{ display:none; width:100%; flex-direction:column; align-items:flex-start; padding:8px 0; }
+    .mm-nav.mm-open{ display:flex; }
+    .mm-shell{ flex-wrap:wrap; }
+  }
+</style>
+
+<script>
+(() => {
+  // Mobile menu
+  const burger = document.getElementById('mmBurger');
+  const nav    = document.getElementById('mmNav');
+  burger?.addEventListener('click', () => nav.classList.toggle('mm-open'));
+
+  // Active link by path
+  const path = location.pathname.endsWith('/') ? location.pathname : location.pathname + '/';
+  document.querySelectorAll('#mmNav a[data-match]').forEach(a => {
+    const m = a.getAttribute('data-match');
+    if (m === '/' ? path === '/' : path.startsWith(m)) a.classList.add('mm-active');
+  });
+
+  // Cart badge (suma de carritos que ya tienes: leads + agents + sites, etc.)
+  function getCount(key){
+    try{
+      const raw = localStorage.getItem(key);
+      if(!raw) return 0;
+      const v = JSON.parse(raw);
+      if (Array.isArray(v)) return v.length;
+      if (v && typeof v === 'object' && Array.isArray(v.items)) return v.items.length;
+      return 0;
+    }catch{ return 0; }
+  }
+  const total =
+      getCount('leadsCart') +
+      getCount('agentsCart') +
+      getCount('sitesCart') +
+      getCount('cartItems') +
+      getCount('mmCart');
+  const badge = document.getElementById('mmCartBadge');
+  if (badge) badge.textContent = String(total);
+})();
+</script>

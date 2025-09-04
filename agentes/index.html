@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>AI Agents — Maestro Market</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0d8a56" />
+  <link rel="stylesheet" href="/theme.css?v=11" />
+  <script src="/cart.js" defer></script>
+  <style>
+    .wrap{max-width:1200px;margin:0 auto;padding:28px 20px}
+    .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+    .filters input{padding:12px;border:1px solid #e4e7eb;border-radius:12px;min-width:280px}
+    .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .card{background:#fff;border-radius:16px;box-shadow:0 6px 24px rgba(0,0,0,.06);padding:16px;display:grid;gap:10px}
+    .card h3{margin:0}
+    .desc{opacity:.9;min-height:48px}
+    .price{font-weight:700}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    .btn{padding:10px 14px;border-radius:12px;text-decoration:none;font-weight:700;display:inline-block}
+    .btn-primary{background:#18a362;color:#fff}
+    .btn-dark{background:#0b6e48;color:#fff}
+    .muted{opacity:.75}
+  </style>
+</head>
+<body>
+  <div id="site-header" data-src="/components/header.html?v=11"></div>
+
+  <main class="wrap">
+    <h1>AI Agents</h1>
+
+    <div class="filters">
+      <input id="q" placeholder="Search agents…" />
+      <span class="muted" id="count"></span>
+    </div>
+
+    <section class="grid" id="list">
+      <!-- Cards render here -->
+    </section>
+  </main>
+
+  <div id="site-footer" data-src="/components/footer.html?v=3"></div>
+
+  <!-- includes for header/footer -->
+  <script>
+    (async()=>{const inc=async(h)=>{const s=h.getAttribute('data-src');if(!s)return;h.innerHTML=await (await fetch(s,{cache:'no-store'})).text();};await Promise.all([...document.querySelectorAll('[data-src]')].map(inc));})();
+  </script>
+
+  <!-- listing logic -->
+  <script>
+    const LIST = document.getElementById('list');
+    const Q = document.getElementById('q');
+    const COUNT = document.getElementById('count');
+    let all = [];
+
+    function money(n){ return '$' + (Math.round(n*100)/100).toFixed(2); }
+    function escapeHtml(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+    function addToCart(item){
+      const key = 'cart_items';
+      const arr = JSON.parse(localStorage.getItem(key) || '[]');
+      const i = arr.findIndex(x => x.slug === item.slug);
+      if(i >= 0){ arr[i].qty = (arr[i].qty||1) + 1; }
+      else { arr.push({ slug:item.slug, name:item.name, qty:1, price_usd:item.price_usd }); }
+      localStorage.setItem(key, JSON.stringify(arr));
+      alert('Added to cart: ' + item.name);
+    }
+
+    function render(list){
+      LIST.innerHTML = list.map(a => `
+        <article class="card">
+          <h3>${escapeHtml(a.name)}</h3>
+          <p class="desc">${escapeHtml(a.desc)}</p>
+          <div class="price">${money(a.price_usd)}</div>
+          <div class="actions">
+            <a class="btn btn-primary" href="javascript:void(0)" onclick='addToCart(${JSON.stringify(a)})'>Add to cart</a>
+            <a class="btn btn-dark" href="/agent/${encodeURIComponent(a.slug)}.html">Details</a>
+          </div>
+        </article>
+      `).join('');
+      COUNT.textContent = `${list.length} of ${all.length} agents`;
+    }
+
+    async function load(){
+      try{
+        const res = await fetch('/assets/data/agents.json', {cache:'no-store'});
+        all = await res.json();
+        render(all);
+      }catch(e){
+        console.error(e);
+        LIST.innerHTML = '<p>Could not load agents.</p>';
+      }
+    }
+
+    Q.addEventListener('input', () => {
+      const term = Q.value.trim().toLowerCase();
+      const filtered = !term ? all : all.filter(a =>
+        a.name.toLowerCase().includes(term) ||
+        a.desc.toLowerCase().includes(term) ||
+        a.slug.toLowerCase().includes(term)
+      );
+      render(filtered);
+    });
+
+    load();
+  </script>
+</body>
+</html>

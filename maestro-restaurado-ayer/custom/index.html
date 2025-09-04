@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Custom Build</title>
+  <link rel="stylesheet" href="/theme.css">
+  <script src="/cart.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Custom Build</h1>
+    <p>Cuéntanos qué necesitas y lo creamos a tu gusto 🚀</p>
+
+    <form id="customForm">
+      <label>Tu nombre</label>
+      <input type="text" name="name" required>
+
+      <label>Tu email</label>
+      <input type="email" name="email" required>
+
+      <label>Tipo de agente</label>
+      <select name="type" required>
+        <option value="AI Agent">AI Agent</option>
+        <option value="Integration">Integration</option>
+        <option value="Website">Website</option>
+      </select>
+
+      <label>Descripción</label>
+      <textarea name="description" required></textarea>
+
+      <label>Presupuesto (USD)</label>
+      <input type="number" name="budget" required min="5" step="1">
+
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("customForm");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const data = Object.fromEntries(new FormData(form));
+
+      // 1️⃣ Envía el pedido al function → Telegram
+      await fetch("/.netlify/functions/custom_build", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      // 2️⃣ Añade al carrito (simula un agente dinámico)
+      addToCart({
+        slug: "custom-build-" + Date.now(),
+        name: "Custom: " + data.type,
+        description: data.description,
+        price: parseFloat(data.budget),
+        img: "/assets/img/custom.png"
+      });
+
+      alert("✅ Pedido enviado. Revisa el carrito.");
+      form.reset();
+    });
+  </script>
+</body>
+</html>

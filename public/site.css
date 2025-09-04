@@ -1,0 +1,122 @@
+/* --------- Reset & base --------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+:root{
+  --brand:#0f8a5f;     /* verde header/botones */
+  --brand-dark:#0b724e;
+  --bg:#f7faf8;
+  --text:#0e1f14;
+  --muted:#5b6e64;
+  --card:#ffffff;
+  --ring:rgba(15,138,95,.25);
+  --radius:16px;
+  --shadow:0 8px 28px rgba(13, 63, 45, .12);
+}
+body{
+  font: 16px/1.55 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+  color:var(--text);
+  background:var(--bg);
+}
+
+/* --------- Container --------- */
+.container{
+  width:min(1100px, 92%);
+  margin-inline:auto;
+}
+
+/* --------- Header (por si tu header.html trae clase .site-header) --------- */
+.site-header{
+  position: sticky; top:0; z-index:50;
+  background:linear-gradient(180deg, var(--brand), #0e9b6a);
+  color:#fff;
+  box-shadow:0 1px 0 rgba(255,255,255,.08), 0 10px 30px rgba(8,63,45,.12);
+}
+.site-header .bar{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:20px; padding:18px 0;
+}
+.site-header .logo{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:20px; }
+.site-header nav a{
+  color:#fff; text-decoration:none; font-weight:600; opacity:.95;
+  padding:.35rem .7rem; border-radius:999px;
+}
+.site-header nav a:hover{ background:rgba(255,255,255,.14); }
+
+/* --------- Hero --------- */
+.hero{
+  background:linear-gradient(180deg, var(--brand), #0ea371);
+  color:#fff;
+  padding:72px 0 60px;
+  text-align:center;
+}
+.hero h1{
+  font-size: clamp(30px, 3.8vw, 48px);
+  line-height:1.1; margin:0 0 14px;
+  letter-spacing:.2px;
+}
+.hero p{
+  margin:0 auto 26px;
+  font-size: clamp(16px, 1.6vw, 18px);
+  opacity:.95;
+  max-width:880px;
+}
+.cta{ display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
+
+/* --------- Buttons --------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:.9rem 1.25rem; border-radius:999px;
+  background:#fff; color:var(--brand); font-weight:800; text-decoration:none;
+  box-shadow:var(--shadow); border:1px solid rgba(255,255,255,.6);
+  transition:transform .06s ease, filter .2s ease;
+}
+.btn:hover{ transform:translateY(-1px); filter:saturate(1.1) }
+.btn:active{ transform:translateY(0) }
+.btn.secondary{
+  background:var(--brand-dark); color:#fff; border:1px solid rgba(255,255,255,.18);
+}
+
+/* --------- Sections & titles --------- */
+section{ padding:42px 0; }
+h2{
+  font-size: clamp(22px, 2.2vw, 28px);
+  margin:0 0 18px;
+}
+h3{ font-size:18px; margin:0 0 8px; }
+
+/* --------- Cards grid --------- */
+.cards{
+  display:grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap:18px;
+}
+.card{
+  grid-column: span 12;
+  background:var(--card); border-radius:var(--radius);
+  padding:20px; box-shadow: var(--shadow);
+  border:1px solid #e6efe9;
+}
+.card .btn{ margin-top:12px; }
+
+/* 2 columnas en >=600px */
+@media (min-width: 600px){
+  .card{ grid-column: span 6; }
+}
+/* 3 columnas en >=900px */
+@media (min-width: 900px){
+  .card{ grid-column: span 4; }
+}
+
+/* --------- Footer --------- */
+.site-footer{
+  margin-top:40px; padding:24px 0 46px;
+  background:#0f2f23; color:#bfe7d5;
+}
+.site-footer a{ color:#e8fbf3; text-decoration:none; opacity:.9 }
+.site-footer a:hover{ opacity:1; text-decoration:underline }
+
+/* --------- Helpers --------- */
+.muted{ color:var(--muted); }
+.center{ text-align:center; }
+.round{ border-radius:999px; }
+.ring{ outline: 3px solid var(--ring); outline-offset: 3px; border-radius: 12px; }
